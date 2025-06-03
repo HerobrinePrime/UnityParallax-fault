@@ -15,9 +15,7 @@ namespace DefaultNamespace.Utils
         [SerializeField] private float xConstraint;
         [SerializeField] private float yConstraint;
         
-        
         private static PlayerSettings _instance;
-
         public static PlayerSettings Instance
         {
             get
@@ -29,5 +27,17 @@ namespace DefaultNamespace.Utils
                 return _instance;
             }
         }
+
+        public bool Reverse { get => reverse; set => reverse = value; }
+        
+        public float Volume { get => volume; set => volume = value; }
+        
+        public bool Muted { get => muted; set => muted = value; }
+        
+        public float MenuTransparency { get => menuTransparency; set => menuTransparency = value; }
+        
+        public float XConstraint { get => xConstraint; set => xConstraint = value; }
+        
+        public float YConstraint { get => yConstraint; set => yConstraint = value; }
     }
 }

@@ -1105,9 +1105,9 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7322656306300385031}
-        m_TargetAssemblyTypeName: BGController, Assembly-CSharp
-        m_MethodName: SetReversed
+      - m_Target: {fileID: 1857242327}
+        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_MethodName: ToggleReverse
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1651,7 +1651,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1857242327}
+        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_MethodName: SetHorizontalConstraint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &605325578
 GameObject:
   m_ObjectHideFlags: 0
@@ -2182,7 +2194,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 740816964}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -2972,6 +2984,7 @@ MonoBehaviour:
   audioSource: {fileID: 73504357}
   ignoredProcessNames:
   - unity
+  - wallpaper32
 --- !u!1 &1119917502
 GameObject:
   m_ObjectHideFlags: 0
@@ -3201,7 +3214,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1857242327}
+        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_MethodName: SetVerticalConstraint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1332667562
 GameObject:
   m_ObjectHideFlags: 0
@@ -4399,8 +4424,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   animator: {fileID: 1667137986}
-  open: 1
-  duration: 0.5
+  open: 0
   menu: {fileID: 740816969}
 --- !u!95 &1667137986
 Animator:
@@ -5173,9 +5197,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43297bde485596646aae45be9cc2691a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 73504357}
-  volumeSlider: {fileID: 1897127554}
-  muteToggle: {fileID: 1881131393}
+  menu: {fileID: 740816969}
+  backgroundController:
+    bgController: {fileID: 7322656306300385031}
+    reverseToggle: {fileID: 373266733}
+    constraintsController:
+      horizontalConstraintSlider: {fileID: 604222185}
+      verticalConstraintSlider: {fileID: 1252277132}
+  audioController:
+    audioSource: {fileID: 73504357}
+    volumeSlider: {fileID: 1897127554}
+    muteToggle: {fileID: 1881131393}
+    muteToggleDduration: 0.5
+  menuTransparencyController:
+    transparencySlider: {fileID: 1895282176}
 --- !u!1 &1866525031
 GameObject:
   m_ObjectHideFlags: 0
@@ -5335,9 +5370,9 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 73504357}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: set_mute
+      - m_Target: {fileID: 1857242327}
+        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_MethodName: ToggleMute
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5431,16 +5466,16 @@ MonoBehaviour:
   m_FillRect: {fileID: 479123180}
   m_HandleRect: {fileID: 310062533}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.5
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 740816969}
-        m_TargetAssemblyTypeName: UnityEngine.CanvasGroup, UnityEngine
-        m_MethodName: set_alpha
+      - m_Target: {fileID: 1857242327}
+        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_MethodName: SetTransparency
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5540,9 +5575,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 73504357}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: set_volume
+      - m_Target: {fileID: 1857242327}
+        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_MethodName: VolumeSliderValueChanged
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

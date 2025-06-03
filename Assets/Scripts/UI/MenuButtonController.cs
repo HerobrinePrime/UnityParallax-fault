@@ -55,10 +55,10 @@ public class MenuButtonController : MonoBehaviour
     private IEnumerator OpenMenu(bool open)
     {
         float time = 0;
-        while (time < UIController.Instance.muteToggleDduration)
+        while (time < UIController.Instance.audioController.muteToggleDduration)
         {
             time += Time.deltaTime;
-            float process = time / UIController.Instance.muteToggleDduration;
+            float process = time / UIController.Instance.audioController.muteToggleDduration;
             float currentValue = animationCurve.Evaluate(open ? process : 1 - process);
             animator.SetFloat("time", currentValue);
             yield return null;
