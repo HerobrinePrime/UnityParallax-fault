@@ -10,7 +10,6 @@ public class MenuButtonController : MonoBehaviour
     public AnimationCurve animationCurve;
     public Animator animator;
     public bool open = false;
-    public float duration = 0.5f;
 
     public CanvasGroup menu;
 
@@ -27,6 +26,7 @@ public class MenuButtonController : MonoBehaviour
         // Debug.Log("OnPointerEnter");
         _canvasGroup.DOFade(1, 0.2f);
     }
+
 
     public void OnPointerExit()
     {
@@ -55,10 +55,10 @@ public class MenuButtonController : MonoBehaviour
     private IEnumerator OpenMenu(bool open)
     {
         float time = 0;
-        while (time < duration)
+        while (time < UIController.Instance.muteToggleDduration)
         {
             time += Time.deltaTime;
-            float process = time / duration;
+            float process = time / UIController.Instance.muteToggleDduration;
             float currentValue = animationCurve.Evaluate(open ? process : 1 - process);
             animator.SetFloat("time", currentValue);
             yield return null;
@@ -73,12 +73,13 @@ public class MenuButtonController : MonoBehaviour
         {
             // menu.DOScale(1, 0.5f);
             menu.gameObject.SetActive(true);
-            menu.DOFade(1, duration);
+            // menu.DOFade(1, duration);
+            UIController.Instance.ToggleMenu(true);
         }
         else
         {
             // menu.DOScale(0, 0.5f);
-            menu.DOFade(0, duration).OnComplete(() => { menu.gameObject.SetActive(false); });
+            UIController.Instance.ToggleMenu(false).OnComplete(() => { menu.gameObject.SetActive(false); });
         }
     }
 
