@@ -288,6 +288,13 @@ public class BGController : MonoBehaviour
     public void SetParallaxScale(float value)
     {
         parallaxScale = value;
+        /*
+         * TODO: rescaled 
+         */
+        Debug.LogError("Need to Recalculate Info");
+        // ReScale();
+        // ReSizeCamera();
+        // RecordScreenInfo();
     }
 
     public void SetHorizontalConstraint(float value)

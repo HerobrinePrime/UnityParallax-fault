@@ -13,8 +13,11 @@ namespace DefaultNamespace
 
         private void Start()
         {
+            /*
+             * TODO: Should be initialized in InitializeFromSettings
+             */
             Application.targetFrameRate = targetFrameRate;
-            SwitchBackgroundRunningType();
+            SetBackgroundRunningType(backgroundRunningType);
         }
 
         private void OnApplicationFocus(bool hasFocus)
@@ -52,11 +55,17 @@ namespace DefaultNamespace
             }
         }
 
+        public void SetTargetFrameRate(int frameRate)
+        {
+            targetFrameRate = frameRate;
+        }
+        
         /*
          * TODO: Band this to Dropdown menu in Unity Editor
          */
-        private void SwitchBackgroundRunningType()
+        public void SetBackgroundRunningType(BackgroundRunningType type)
         {
+            backgroundRunningType = type;
             switch (backgroundRunningType)
             {
                 case BackgroundRunningType.Running:
@@ -96,11 +105,9 @@ namespace DefaultNamespace
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            SwitchBackgroundRunningType();
+            SetBackgroundRunningType(backgroundRunningType);
         }
 #endif
-
-
     }
 }
 

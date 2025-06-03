@@ -15,7 +15,8 @@ namespace DefaultNamespace.Utils
         public OtherSettings OtherSettings => otherSettings;
         [SerializeField] private BGControllerSettings bgControllerSettings;
         public BGControllerSettings BGControllerSettings => bgControllerSettings;
-
+        [SerializeField] private ApplicationSettings applicationSettings;
+        public ApplicationSettings ApplicationSettings => applicationSettings;
 
         private static PlayerSettingPref _instance;
 
@@ -31,7 +32,7 @@ namespace DefaultNamespace.Utils
                     }
                     else
                     {
-                        _instance = new PlayerSettingPref();
+                        _instance = InitializeNewSetting();
                     }
                 }
 
@@ -44,6 +45,18 @@ namespace DefaultNamespace.Utils
             string json = JsonUtility.ToJson(this);
             PlayerPrefs.SetString(Key, json);
             PlayerPrefs.Save();
+        }
+
+        public static PlayerSettingPref InitializeNewSetting()
+        {
+            var newInstance = new PlayerSettingPref();
+
+            /*
+             * TODO: Get default values from BGController | ApplicationSetting | UIController
+             */
+
+            newInstance.isInitialized = true;
+            return newInstance;
         }
     }
 }
@@ -110,6 +123,29 @@ public class BGControllerSettings
     {
         get => yConstraint;
         set => yConstraint = value;
+    }
+
+    #endregion
+}
+
+[Serializable]
+public class ApplicationSettings
+{
+    [SerializeField] private int targetFrameRate;
+    [SerializeField] private BackgroundRunningType backgroundRunningType;
+
+    #region MyRegion
+
+    public int TargetFrameRate
+    {
+        get => targetFrameRate;
+        set => targetFrameRate = value;
+    }
+
+    public BackgroundRunningType BackgroundRunningType
+    {
+        get => backgroundRunningType;
+        set => backgroundRunningType = value;
     }
 
     #endregion
