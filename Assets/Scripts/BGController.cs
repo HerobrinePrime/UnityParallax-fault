@@ -290,7 +290,7 @@ public class BGController : MonoBehaviour
         horizontalConstraint = value;
     }
 
-    public void SetVerticleConstraint(float value)
+    public void SetVerticalConstraint(float value)
     {
         verticleConstraint = value;
     }

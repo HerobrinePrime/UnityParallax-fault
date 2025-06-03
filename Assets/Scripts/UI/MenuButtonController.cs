@@ -79,7 +79,15 @@ public class MenuButtonController : MonoBehaviour
         else
         {
             // menu.DOScale(0, 0.5f);
-            UIController.Instance.ToggleMenu(false).OnComplete(() => { menu.gameObject.SetActive(false); });
+            UIController.Instance.ToggleMenu(false).OnComplete(() =>
+            {
+                /*
+                 * TODO:
+                 * 1. disable menu object
+                 * 2. Save PlayerSettings
+                 */
+                menu.gameObject.SetActive(false);
+            });
         }
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace DefaultNamespace.Utils
 {
     [Serializable]
-    public class PlayerSettings
+    public class PlayerSettingPref
     {
         private const string Key = "PLAYER_SETTINGS";
         
@@ -15,14 +15,14 @@ namespace DefaultNamespace.Utils
         [SerializeField] private float xConstraint;
         [SerializeField] private float yConstraint;
         
-        private static PlayerSettings _instance;
-        public static PlayerSettings Instance
+        private static PlayerSettingPref _instance;
+        public static PlayerSettingPref Instance
         {
             get
             {
                 if (_instance == null)
                 {
-                    _instance = new PlayerSettings();
+                    _instance = new PlayerSettingPref();
                 }
                 return _instance;
             }

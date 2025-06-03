@@ -1,7 +1,9 @@
 using System;
+using DefaultNamespace.Utils;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -33,45 +35,59 @@ public class UIController : MonoBehaviour
 
     private void Update()
     {
+        //update volume and mute state for audioTester
         volume = audioController.volumeSlider.value;
         muted = audioController.muteToggle.isOn;
     }
 
     public TweenerCore<float, float, FloatOptions> ToggleMenu(bool show)
     {
-        return menu.DOFade(show ? menuTransparencyController.GetTransparency() : 0,
+        return menu.DOFade(show ? menuTransparencyController.MenuCurrentTransparency : 0,
             audioController.muteToggleDduration);
     }
 
     public void ToggleReverse(bool reverse)
     {
-        // BGController
+        backgroundController.bgController.SetReversed(reverse);
+        PlayerSettingPref.Instance.Reverse = reverse;
     }
 
     public void VolumeSliderValueChanged(float value)
     {
+        audioController.audioSource.volume = value;
+        PlayerSettingPref.Instance.Volume = value;
     }
 
     public void ToggleMute(bool mute)
     {
+        audioController.audioSource.mute = mute;
+        PlayerSettingPref.Instance.Muted = mute;
     }
 
     public void SetTransparency(float transparency)
     {
-        menu.alpha = transparency;
-        menuTransparencyController.SetTransparency(transparency);
+        menu.alpha = menuTransparencyController.MenuCurrentTransparency = transparency;
+        PlayerSettingPref.Instance.MenuTransparency = transparency;
     }
 
     public void SetHorizontalConstraint(float value)
     {
+        backgroundController.bgController.SetHorizontalConstraint(value);
+        PlayerSettingPref.Instance.XConstraint = value;
     }
 
     public void SetVerticalConstraint(float value)
     {
+        backgroundController.bgController.SetVerticalConstraint(value);
+        PlayerSettingPref.Instance.YConstraint = value;
     }
 
+    /*
+     * TODO: Initialize UI and game data from settings
+     */
     public void InitFromSettings()
     {
+        
     }
 }
 
@@ -97,17 +113,8 @@ public class AudioController
 public class MenuTransparencyController
 {
     public Slider transparencySlider;
-    private float _menuTtransparency = 1f;
-
-    public void SetTransparency(float transparency)
-    {
-        transparencySlider.value = _menuTtransparency = transparency;
-    }
-
-    public float GetTransparency()
-    {
-        return _menuTtransparency;
-    }
+    private float _menuCurrentTransparency = 1f;
+    public float MenuCurrentTransparency { get => _menuCurrentTransparency; set => _menuCurrentTransparency = value; }
 }
 
 [Serializable]
