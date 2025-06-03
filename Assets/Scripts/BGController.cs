@@ -279,12 +279,22 @@ public class BGController : MonoBehaviour
 
         _lastSize = size;
     }
-    
+
     public void SetReversed(bool value)
     {
         reverse = value;
     }
 
+    public void SetHorizontalConstraint(float value)
+    {
+        horizontalConstraint = value;
+    }
+
+    public void SetVerticleConstraint(float value)
+    {
+        verticleConstraint = value;
+    }
+    
 #if UNITY_EDITOR
     BGController()
     {
