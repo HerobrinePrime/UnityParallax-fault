@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using DefaultNamespace.Utils;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -55,10 +56,10 @@ public class MenuButtonController : MonoBehaviour
     private IEnumerator OpenMenu(bool open)
     {
         float time = 0;
-        while (time < UIController.Instance.audioController.muteToggleDduration)
+        while (time < UIController.Instance.audioUIController.muteToggleDduration)
         {
             time += Time.deltaTime;
-            float process = time / UIController.Instance.audioController.muteToggleDduration;
+            float process = time / UIController.Instance.audioUIController.muteToggleDduration;
             float currentValue = animationCurve.Evaluate(open ? process : 1 - process);
             animator.SetFloat("time", currentValue);
             yield return null;
@@ -87,6 +88,7 @@ public class MenuButtonController : MonoBehaviour
                  * 2. Save PlayerSettings
                  */
                 menu.gameObject.SetActive(false);
+                PlayerSettingPref.Instance.Save();
             });
         }
     }

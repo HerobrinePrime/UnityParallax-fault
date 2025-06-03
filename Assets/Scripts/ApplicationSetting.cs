@@ -1,4 +1,5 @@
 ﻿using System;
+using DefaultNamespace.Utils;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -21,6 +22,11 @@ namespace DefaultNamespace
             PauseOrResume(!hasFocus);
         }
 
+        private void OnApplicationQuit()
+        {
+            PlayerSettingPref.Instance.Save();
+        }
+
         private void PauseOrResume(bool goToPause)
         {
             switch (backgroundRunningType)
@@ -29,9 +35,6 @@ namespace DefaultNamespace
                     Time.timeScale = 1;
                     Application.targetFrameRate = targetFrameRate;
                     break;
-                /*
-                 * TODO: Mute the game when it's paused or stopped
-                 */
                 case BackgroundRunningType.Muted:
                     IsMuted = goToPause;
                     TestAudio.Instance.GraduallyMuteAudio(goToPause);
@@ -73,6 +76,22 @@ namespace DefaultNamespace
             Debug.Log("Background Running Type: " + backgroundRunningType + " - RunInBackground: " +
                       Application.runInBackground);
         }
+        
+        /*
+         * TODO: Load settings from PlayerSettingPref
+         */
+        public void InitializeFromSettings()
+        {
+            
+        }
+        
+        /*
+         * TODO:
+         */
+        public void GetMetaSettings()
+        {
+        
+        }
 
 #if UNITY_EDITOR
         private void OnValidate()
@@ -81,9 +100,7 @@ namespace DefaultNamespace
         }
 #endif
 
-        void Test()
-        {
-        }
+
     }
 }
 

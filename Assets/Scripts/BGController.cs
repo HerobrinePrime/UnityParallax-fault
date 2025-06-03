@@ -285,6 +285,11 @@ public class BGController : MonoBehaviour
         reverse = value;
     }
 
+    public void SetParallaxScale(float value)
+    {
+        parallaxScale = value;
+    }
+
     public void SetHorizontalConstraint(float value)
     {
         horizontalConstraint = value;
@@ -293,6 +298,22 @@ public class BGController : MonoBehaviour
     public void SetVerticalConstraint(float value)
     {
         verticleConstraint = value;
+    }
+    
+    /*
+     * TODO: Load settings from PlayerSettingPref
+     */
+    public void InitializeFromSettings()
+    {
+            
+    }
+    
+    /*
+     * TODO: 
+     */
+    public void GetMetaSettings()
+    {
+        
     }
     
 #if UNITY_EDITOR

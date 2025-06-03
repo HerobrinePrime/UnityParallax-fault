@@ -12,9 +12,9 @@ public class UIController : MonoBehaviour
 {
     public CanvasGroup menu;
 
-    public BackgroundController backgroundController;
-    public AudioController audioController;
-    public MenuTransparencyController menuTransparencyController;
+    public BGUIController bgUIController;
+    public AudioUIController audioUIController;
+    public MenuTransparencyUIController menuTransparencyUIController;
 
     public static float volume;
     public static bool muted;
@@ -36,50 +36,56 @@ public class UIController : MonoBehaviour
     private void Update()
     {
         //update volume and mute state for audioTester
-        volume = audioController.volumeSlider.value;
-        muted = audioController.muteToggle.isOn;
+        volume = audioUIController.volumeSlider.value;
+        muted = audioUIController.muteToggle.isOn;
     }
 
     public TweenerCore<float, float, FloatOptions> ToggleMenu(bool show)
     {
-        return menu.DOFade(show ? menuTransparencyController.MenuCurrentTransparency : 0,
-            audioController.muteToggleDduration);
+        return menu.DOFade(show ? menuTransparencyUIController.MenuCurrentTransparency : 0,
+            audioUIController.muteToggleDduration);
     }
 
     public void ToggleReverse(bool reverse)
     {
-        backgroundController.bgController.SetReversed(reverse);
-        PlayerSettingPref.Instance.Reverse = reverse;
+        bgUIController.bgController.SetReversed(reverse);
+        PlayerSettingPref.Instance.BGControllerSettings.Reverse = reverse;
+    }
+
+    public void ParallaxScaleSliderValueChanged(float value)
+    {
+        bgUIController.bgController.SetParallaxScale(value);
+        PlayerSettingPref.Instance.BGControllerSettings.ParallaxScale = value;
     }
 
     public void VolumeSliderValueChanged(float value)
     {
-        audioController.audioSource.volume = value;
-        PlayerSettingPref.Instance.Volume = value;
+        audioUIController.audioSource.volume = value;
+        PlayerSettingPref.Instance.OtherSettings.Volume = value;
     }
 
     public void ToggleMute(bool mute)
     {
-        audioController.audioSource.mute = mute;
-        PlayerSettingPref.Instance.Muted = mute;
+        audioUIController.audioSource.mute = mute;
+        PlayerSettingPref.Instance.OtherSettings.Muted = mute;
     }
 
     public void SetTransparency(float transparency)
     {
-        menu.alpha = menuTransparencyController.MenuCurrentTransparency = transparency;
-        PlayerSettingPref.Instance.MenuTransparency = transparency;
+        menu.alpha = menuTransparencyUIController.MenuCurrentTransparency = transparency;
+        PlayerSettingPref.Instance.OtherSettings.MenuTransparency = transparency;
     }
 
     public void SetHorizontalConstraint(float value)
     {
-        backgroundController.bgController.SetHorizontalConstraint(value);
-        PlayerSettingPref.Instance.XConstraint = value;
+        bgUIController.bgController.SetHorizontalConstraint(value);
+        PlayerSettingPref.Instance.BGControllerSettings.XConstraint = value;
     }
 
     public void SetVerticalConstraint(float value)
     {
-        backgroundController.bgController.SetVerticalConstraint(value);
-        PlayerSettingPref.Instance.YConstraint = value;
+        bgUIController.bgController.SetVerticalConstraint(value);
+        PlayerSettingPref.Instance.BGControllerSettings.YConstraint = value;
     }
 
     /*
@@ -89,18 +95,27 @@ public class UIController : MonoBehaviour
     {
         
     }
+    
+    /*
+     * TODO:
+     */
+    public void GetMetaSettings()
+    {
+        
+    }
 }
 
 [Serializable]
-public class BackgroundController
+public class BGUIController
 {
     public BGController bgController;
     public Toggle reverseToggle;
-    public ConstraintsController constraintsController;
+    public Slider parallaxScaleSlider;
+    public ConstraintsUIController constraintsUIController;
 }
 
 [Serializable]
-public class AudioController
+public class AudioUIController
 {
     public AudioSource audioSource;
     public Slider volumeSlider;
@@ -110,7 +125,7 @@ public class AudioController
 }
 
 [Serializable]
-public class MenuTransparencyController
+public class MenuTransparencyUIController
 {
     public Slider transparencySlider;
     private float _menuCurrentTransparency = 1f;
@@ -118,7 +133,7 @@ public class MenuTransparencyController
 }
 
 [Serializable]
-public class ConstraintsController
+public class ConstraintsUIController
 {
     public Slider horizontalConstraintSlider;
     public Slider verticalConstraintSlider;
