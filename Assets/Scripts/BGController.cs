@@ -45,6 +45,17 @@ public class BGController : MonoBehaviour
     private Dictionary<LayerType, Dictionary<Season, Dictionary<TimeOfDay, Texture2D>>> _layerSeasonTimeTextureMap;
     private Dictionary<LayerType, TransitionMaterial> _layerMaterialMap;
 
+    public static BGController Instance;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            throw new Exception("More than one BGController in scene");
+        }
+        Instance = this;
+    }
+
     void Start()
     {
         ReScale();
@@ -289,7 +300,7 @@ public class BGController : MonoBehaviour
     {
         parallaxScale = value;
         /*
-         * TODO: rescaled 
+         * TODO: rescaled
          */
         Debug.LogError("Need to Recalculate Info");
         // ReScale();
@@ -306,23 +317,27 @@ public class BGController : MonoBehaviour
     {
         verticleConstraint = value;
     }
-    
+
     /*
      * TODO: Load settings from PlayerSettingPref
      */
     public void InitializeFromSettings()
     {
-            
     }
-    
+
     /*
-     * TODO: 
+     * TODO:
      */
-    public void GetMetaSettings()
+    public BGControllerSettings GetMetaSettings()
     {
-        
+        return new BGControllerSettings(
+            reverse,
+            parallaxScale,
+            horizontalConstraint,
+            verticleConstraint
+        );
     }
-    
+
 #if UNITY_EDITOR
     BGController()
     {

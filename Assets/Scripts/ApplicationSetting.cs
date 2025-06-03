@@ -11,6 +11,18 @@ namespace DefaultNamespace
 
         public static bool IsMuted = false;
 
+        public static ApplicationSetting Instance;
+
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                throw new Exception("ApplicationSetting instance already exists!"); 
+                // Application.Quit();
+            }
+            Instance = this;
+        }
+
         private void Start()
         {
             /*
@@ -59,10 +71,7 @@ namespace DefaultNamespace
         {
             targetFrameRate = frameRate;
         }
-        
-        /*
-         * TODO: Band this to Dropdown menu in Unity Editor
-         */
+
         public void SetBackgroundRunningType(BackgroundRunningType type)
         {
             backgroundRunningType = type;
@@ -85,21 +94,23 @@ namespace DefaultNamespace
             Debug.Log("Background Running Type: " + backgroundRunningType + " - RunInBackground: " +
                       Application.runInBackground);
         }
-        
+
         /*
          * TODO: Load settings from PlayerSettingPref
          */
         public void InitializeFromSettings()
         {
-            
         }
-        
+
         /*
          * TODO:
          */
-        public void GetMetaSettings()
+        public ApplicationSettings GetMetaSettings()
         {
-        
+            return new ApplicationSettings(
+                targetFrameRate,
+                backgroundRunningType
+            );
         }
 
 #if UNITY_EDITOR

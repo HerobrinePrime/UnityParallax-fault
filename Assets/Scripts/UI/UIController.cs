@@ -27,9 +27,17 @@ public class UIController : MonoBehaviour
     public static float volume;
     public static bool muted;
 
-    private static UIController _instance;
+    public static UIController Instance;
 
-    public static UIController Instance => _instance;
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            throw new Exception("An instance of UIController already exists!");
+        }
+
+        Instance = this;
+    }
 
     /*
      * TODO: Initiliaze the UI with data instead of componets
@@ -38,7 +46,6 @@ public class UIController : MonoBehaviour
     {
         // volumeSlider.value = volume = audioSource.volume;
         // muteToggle.isOn = muted = audioSource.mute;
-        _instance = this;
 
         // applicationUIController.backgroundRunningTypeDropdown.options
         CreateBackgroundRunningTypeDropdownOptions(applicationUIController.backgroundRunningTypeDropdown);
@@ -143,7 +150,7 @@ public class UIController : MonoBehaviour
         // applicationUIController.applicationSetting.SetBackgroundRunningType(value);        
         var type = (BackgroundRunningType)value;
         applicationUIController.applicationSetting.SetBackgroundRunningType(type);
-        
+
         PlayerSettingPref.Instance.ApplicationSettings.BackgroundRunningType = type;
     }
 
@@ -157,8 +164,13 @@ public class UIController : MonoBehaviour
     /*
      * TODO:
      */
-    public void GetMetaSettings()
+    public OtherSettings GetMetaSettings()
     {
+        return new OtherSettings(
+            audioUIController.audioSource.volume,
+            audioUIController.audioSource.mute,
+            menuTransparencyUIController.MenuCurrentTransparency
+        );
     }
 }
 

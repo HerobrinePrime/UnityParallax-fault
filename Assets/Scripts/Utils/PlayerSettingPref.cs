@@ -9,14 +9,28 @@ namespace DefaultNamespace.Utils
     {
         private const string Key = "PLAYER_SETTINGS";
 
-        [SerializeField] private bool isInitialized = false;
+        // [SerializeField] private bool isInitialized = false;
 
         [SerializeField] public OtherSettings otherSettings;
-        public OtherSettings OtherSettings => otherSettings;
+
+        public OtherSettings OtherSettings
+        {
+            get => otherSettings;
+            set => otherSettings = value;
+        }
         [SerializeField] private BGControllerSettings bgControllerSettings;
-        public BGControllerSettings BGControllerSettings => bgControllerSettings;
+        public BGControllerSettings BGControllerSettings
+        {
+            get => bgControllerSettings;
+            set => bgControllerSettings = value;
+        }
+
         [SerializeField] private ApplicationSettings applicationSettings;
-        public ApplicationSettings ApplicationSettings => applicationSettings;
+        public ApplicationSettings ApplicationSettings
+        {
+            get => applicationSettings;
+            set => applicationSettings = value;
+        }
 
         private static PlayerSettingPref _instance;
 
@@ -32,7 +46,8 @@ namespace DefaultNamespace.Utils
                     }
                     else
                     {
-                        _instance = InitializeNewSetting();
+                        _instance = new PlayerSettingPref();
+                        _instance.InitializeNewSetting();
                     }
                 }
 
@@ -47,16 +62,16 @@ namespace DefaultNamespace.Utils
             PlayerPrefs.Save();
         }
 
-        public static PlayerSettingPref InitializeNewSetting()
+        public void InitializeNewSetting()
         {
-            var newInstance = new PlayerSettingPref();
-
             /*
              * TODO: Get default values from BGController | ApplicationSetting | UIController
              */
+            this.ApplicationSettings = ApplicationSetting.Instance.GetMetaSettings();
+            this.OtherSettings = UIController.Instance.GetMetaSettings();
+            this.BGControllerSettings = BGController.Instance.GetMetaSettings();
 
-            newInstance.isInitialized = true;
-            return newInstance;
+            // this.isInitialized = true;
         }
     }
 }
@@ -69,6 +84,13 @@ public class OtherSettings
     [SerializeField] private float menuTransparency;
 
     #region MyRegion
+
+    public OtherSettings(float volume, bool muted, float menuTransparency)
+    {
+        this.volume = volume;
+        this.muted = muted;
+        this.menuTransparency = menuTransparency;
+    }
 
     public float Volume
     {
@@ -100,6 +122,14 @@ public class BGControllerSettings
     [SerializeField] private float yConstraint;
 
     #region MyRegion
+
+    public BGControllerSettings(bool reverse, float parallaxScale, float xConstraint, float yConstraint)
+    {
+        this.reverse = reverse;
+        this.parallaxScale = parallaxScale;
+        this.xConstraint = xConstraint;
+        this.yConstraint = yConstraint;
+    }
 
     public bool Reverse
     {
@@ -135,6 +165,12 @@ public class ApplicationSettings
     [SerializeField] private BackgroundRunningType backgroundRunningType;
 
     #region MyRegion
+
+    public ApplicationSettings(int targetFrameRate, BackgroundRunningType backgroundRunningType)
+    {
+        this.targetFrameRate = targetFrameRate;
+        this.backgroundRunningType = backgroundRunningType;
+    }
 
     public int TargetFrameRate
     {
