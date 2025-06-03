@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using DefaultNamespace.Utils;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -82,11 +81,6 @@ public class MenuButtonController : MonoBehaviour
             // menu.DOScale(0, 0.5f);
             UIController.Instance.ToggleMenu(false).OnComplete(() =>
             {
-                /*
-                 * TODO:
-                 * 1. disable menu object
-                 * 2. Save PlayerSettings
-                 */
                 menu.gameObject.SetActive(false);
                 PlayerSettingPref.Instance.Save();
             });

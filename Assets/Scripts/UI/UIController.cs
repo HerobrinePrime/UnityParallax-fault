@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using DefaultNamespace;
-using DefaultNamespace.Utils;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
@@ -14,6 +13,7 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Slider = UnityEngine.UI.Slider;
 using Toggle = UnityEngine.UI.Toggle;
+using Debug = UnityEngine.Debug;
 
 public class UIController : MonoBehaviour
 {
@@ -39,9 +39,6 @@ public class UIController : MonoBehaviour
         Instance = this;
     }
 
-    /*
-     * TODO: Initiliaze the UI with data instead of componets
-     */
     private void Start()
     {
         // volumeSlider.value = volume = audioSource.volume;
@@ -49,6 +46,8 @@ public class UIController : MonoBehaviour
 
         // applicationUIController.backgroundRunningTypeDropdown.options
         CreateBackgroundRunningTypeDropdownOptions(applicationUIController.backgroundRunningTypeDropdown);
+
+        InitFromSettings();
     }
 
     private void Update()
@@ -100,8 +99,16 @@ public class UIController : MonoBehaviour
         PlayerSettingPref.Instance.OtherSettings.Muted = mute;
     }
 
+    // bool _isFirseTime = true;
     public void SetTransparency(float transparency)
     {
+        // if (_isFirseTime)
+        // {
+        //     _isFirseTime = false;
+        //     return;
+        // }
+
+        Debug.Log("Set transparency");
         menu.alpha = menuTransparencyUIController.MenuCurrentTransparency = transparency;
         PlayerSettingPref.Instance.OtherSettings.MenuTransparency = transparency;
     }
@@ -118,18 +125,27 @@ public class UIController : MonoBehaviour
         PlayerSettingPref.Instance.BGControllerSettings.YConstraint = value;
     }
 
+    public void TargetFrameRateSliderValueChanged(float value)
+    {
+        applicationUIController.targetFrameRateInputField.text = value.ToString();
+    }
+
     public void TargetFrameRateSliderValueChanged(BaseEventData data)
     {
+        Debug.Log("TargetFrameRate Slider Value Changed");
         // applicationUIController.targetFrameRateInputField.text = value.ToString();
         // applicationUIController.applicationSetting.SetTargetFrameRate(value);
-        Debug.Log(applicationUIController.targetFrameRateSlider.value);
+        // Debug.Log(applicationUIController.targetFrameRateSlider.value);
+        var targetFrameRate = (int)applicationUIController.targetFrameRateSlider.value;
+        applicationUIController.targetFrameRateInputField.text = targetFrameRate.ToString();
+        applicationUIController.applicationSetting.SetTargetFrameRate(targetFrameRate);
 
-        PlayerSettingPref.Instance.ApplicationSettings.TargetFrameRate =
-            (int)applicationUIController.targetFrameRateSlider.value;
+        PlayerSettingPref.Instance.ApplicationSettings.TargetFrameRate = targetFrameRate;
     }
 
     public void TargetFrameRateInputFieldValueChanged(string value)
     {
+        Debug.Log("TargetFrameRate Input Field Value Changed");
         int targetFrameRate = Int32.Parse(value);
         applicationUIController.targetFrameRateSlider.value = targetFrameRate;
 
@@ -138,6 +154,7 @@ public class UIController : MonoBehaviour
 
     public void TargetFrameRateInputFieldEndEdit(string value)
     {
+        Debug.Log("TargetFrameRate Input Field End Edit");
         int targetFrameRate = Int32.Parse(value);
         applicationUIController.targetFrameRateSlider.value = targetFrameRate;
         applicationUIController.applicationSetting.SetTargetFrameRate(targetFrameRate);
@@ -148,22 +165,45 @@ public class UIController : MonoBehaviour
     public void BackgroundRunningTypeDropdownValueChanged(int value)
     {
         // applicationUIController.applicationSetting.SetBackgroundRunningType(value);        
+        Debug.Log(value);
         var type = (BackgroundRunningType)value;
+        Debug.Log(type);
         applicationUIController.applicationSetting.SetBackgroundRunningType(type);
 
         PlayerSettingPref.Instance.ApplicationSettings.BackgroundRunningType = type;
     }
 
-    /*
-     * TODO: Initialize UI and game data from settings
-     */
     public void InitFromSettings()
     {
+        //init other settings
+        var otherSettings = PlayerSettingPref.Instance.OtherSettings;
+        audioUIController.audioSource.volume = otherSettings.Volume;
+        audioUIController.audioSource.mute = otherSettings.Muted;
+        menuTransparencyUIController.MenuCurrentTransparency = otherSettings.MenuTransparency;
+
+        var bgControllerSettings = PlayerSettingPref.Instance.BGControllerSettings;
+        var applicationSettings = PlayerSettingPref.Instance.ApplicationSettings;
+
+        //read ui data
+        applicationUIController.targetFrameRateSlider.value = applicationSettings.TargetFrameRate;
+        applicationUIController.targetFrameRateInputField.text = applicationSettings.TargetFrameRate.ToString();
+        applicationUIController.backgroundRunningTypeDropdown.value = (int)applicationSettings.BackgroundRunningType;
+        applicationUIController.backgroundRunningTypeDropdown.RefreshShownValue();
+        
+        bgUIController.reverseToggle.isOn = bgControllerSettings.Reverse;
+        bgUIController.parallaxScaleSlider.value = bgControllerSettings.ParallaxScale;
+
+        audioUIController.volumeSlider.value = otherSettings.Volume;
+        audioUIController.muteToggle.isOn = otherSettings.Muted;
+
+        // menuTransparencyUIController.transparencySlider.value = otherSettings.MenuTransparency;
+        menuTransparencyUIController.transparencySlider.SetValueWithoutNotify(otherSettings.MenuTransparency);
+        
+        bgUIController.constraintsUIController.horizontalConstraintSlider.value = bgControllerSettings.XConstraint;
+        bgUIController.constraintsUIController.verticalConstraintSlider.value = bgControllerSettings.YConstraint;
     }
 
-    /*
-     * TODO:
-     */
+
     public OtherSettings GetMetaSettings()
     {
         return new OtherSettings(

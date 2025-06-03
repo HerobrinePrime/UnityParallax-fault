@@ -12,7 +12,8 @@ using CSCore.CoreAudioAPI;
 using DefaultNamespace;
 using DG.Tweening;
 using PimDeWitte.UnityMainThreadDispatcher;
-using Debug = UnityEngine.Debug;
+// using Debug = UnityEngine.Debug;
+using Debug = DefaultNamespace.Debug.Debug;
 
 
 public class TestAudio : MonoBehaviour
@@ -157,3 +158,4 @@ public class TestAudio : MonoBehaviour
         _isRunning = false;
     }
 }
+

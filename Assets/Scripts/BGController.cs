@@ -14,6 +14,8 @@ using UnityEngine.Timeline;
 using Screen = UnityEngine.Device.Screen;
 using UnityEngine.Rendering;
 using UnityEngine.Serialization;
+// using Debug = UnityEngine.Debug;
+using Debug = DefaultNamespace.Debug.Debug;
 
 public class BGController : MonoBehaviour
 {
@@ -58,6 +60,8 @@ public class BGController : MonoBehaviour
 
     void Start()
     {
+        InitializeFromSettings();
+        
         ReScale();
         ReSizeCamera();
 
@@ -318,16 +322,17 @@ public class BGController : MonoBehaviour
         verticleConstraint = value;
     }
 
-    /*
-     * TODO: Load settings from PlayerSettingPref
-     */
+
     public void InitializeFromSettings()
     {
+        var bgControllerSettings = PlayerSettingPref.Instance.BGControllerSettings;
+        this.SetReversed(bgControllerSettings.Reverse);
+        // Debug.Log(bgControllerSettings.ParallaxScale);
+        this.SetParallaxScale(bgControllerSettings.ParallaxScale);
+        this.SetHorizontalConstraint(bgControllerSettings.XConstraint);
+        this.SetVerticalConstraint(bgControllerSettings.YConstraint);
     }
-
-    /*
-     * TODO:
-     */
+    
     public BGControllerSettings GetMetaSettings()
     {
         return new BGControllerSettings(

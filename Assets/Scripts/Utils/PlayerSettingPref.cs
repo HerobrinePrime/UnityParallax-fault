@@ -1,78 +1,81 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Debug = UnityEngine.Debug;
 
-namespace DefaultNamespace.Utils
+
+[Serializable]
+public class PlayerSettingPref
 {
-    [Serializable]
-    public class PlayerSettingPref
+    private const string Key = "PLAYER_SETTINGS";
+
+    // [SerializeField] private bool isInitialized = false;
+
+    [SerializeField] public OtherSettings otherSettings;
+
+    public OtherSettings OtherSettings
     {
-        private const string Key = "PLAYER_SETTINGS";
+        get => otherSettings;
+        set => otherSettings = value;
+    }
 
-        // [SerializeField] private bool isInitialized = false;
+    [SerializeField] private BGControllerSettings bgControllerSettings;
 
-        [SerializeField] public OtherSettings otherSettings;
+    public BGControllerSettings BGControllerSettings
+    {
+        get => bgControllerSettings;
+        set => bgControllerSettings = value;
+    }
 
-        public OtherSettings OtherSettings
+    [SerializeField] private ApplicationSettings applicationSettings;
+
+    public ApplicationSettings ApplicationSettings
+    {
+        get => applicationSettings;
+        set => applicationSettings = value;
+    }
+
+    private static PlayerSettingPref _instance;
+
+    public static PlayerSettingPref Instance
+    {
+        get
         {
-            get => otherSettings;
-            set => otherSettings = value;
-        }
-        [SerializeField] private BGControllerSettings bgControllerSettings;
-        public BGControllerSettings BGControllerSettings
-        {
-            get => bgControllerSettings;
-            set => bgControllerSettings = value;
-        }
-
-        [SerializeField] private ApplicationSettings applicationSettings;
-        public ApplicationSettings ApplicationSettings
-        {
-            get => applicationSettings;
-            set => applicationSettings = value;
-        }
-
-        private static PlayerSettingPref _instance;
-
-        public static PlayerSettingPref Instance
-        {
-            get
+            if (_instance == null)
             {
-                if (_instance == null)
+                if (PlayerPrefs.HasKey(Key))
                 {
-                    if (PlayerPrefs.HasKey(Key))
-                    {
-                        _instance = JsonUtility.FromJson<PlayerSettingPref>(PlayerPrefs.GetString(Key));
-                    }
-                    else
-                    {
-                        _instance = new PlayerSettingPref();
-                        _instance.InitializeNewSetting();
-                    }
+                    _instance = JsonUtility.FromJson<PlayerSettingPref>(PlayerPrefs.GetString(Key));
                 }
-
-                return _instance;
+                else
+                {
+                    Debug.Log("Setting not found, creating new setting using current value");
+                    _instance = new PlayerSettingPref();
+                    _instance.InitializeNewSetting();
+                }
             }
-        }
 
-        public void Save()
-        {
-            string json = JsonUtility.ToJson(this);
-            PlayerPrefs.SetString(Key, json);
-            PlayerPrefs.Save();
+            return _instance;
         }
+    }
 
-        public void InitializeNewSetting()
-        {
-            /*
-             * TODO: Get default values from BGController | ApplicationSetting | UIController
-             */
-            this.ApplicationSettings = ApplicationSetting.Instance.GetMetaSettings();
-            this.OtherSettings = UIController.Instance.GetMetaSettings();
-            this.BGControllerSettings = BGController.Instance.GetMetaSettings();
+    public void Save()
+    {
+        string json = JsonUtility.ToJson(this);
+        PlayerPrefs.SetString(Key, json);
+        PlayerPrefs.Save();
+    }
 
-            // this.isInitialized = true;
-        }
+    public void InitializeNewSetting()
+    {
+        /*
+         * TODO: Get default values from BGController | ApplicationSetting | UIController
+         */
+        this.ApplicationSettings = ApplicationSetting.Instance.GetMetaSettings();
+        this.OtherSettings = UIController.Instance.GetMetaSettings();
+        this.BGControllerSettings = BGController.Instance.GetMetaSettings();
+
+        // this.isInitialized = true;
     }
 }
 
