@@ -3734,7 +3734,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 740816964}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -7731,7 +7731,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   animator: {fileID: 1667137986}
-  open: 1
+  open: 0
   menu: {fileID: 740816969}
 --- !u!95 &1667137986
 Animator:
@@ -7911,7 +7911,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 866029545}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
