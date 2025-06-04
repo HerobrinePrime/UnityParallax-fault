@@ -152,15 +152,31 @@ public class UIController : MonoBehaviour
         var value2 = Mathf.Round(value * 100) / 100f;
         bgUIController.basicScaleText.SetText(value2.ToString());
     }
+
     public void BasicScaleSliderValueChanged(BaseEventData data)
     {
-        Debug.Log("BasicScaleSliderValueChanged");
         var value = Mathf.Round(bgUIController.basicScaleSlider.value * 100) / 100f;
         bgUIController.basicScaleText.SetText(value.ToString());
-        
+
         bgUIController.bgController.SetBasicScale(value);
 
         PlayerSettingPref.Instance.BGControllerSettings.BasicScale = value;
+    }
+
+    public void DampingSliderValueChanged(float value)
+    {
+        var value2 = Mathf.Round(value * 10) / 10f;
+        bgUIController.dampingText.SetText(value2.ToString());
+    }
+
+    public void DampingSliderValueChanged(BaseEventData data)
+    {
+        var value = Mathf.Round(bgUIController.dampingSlider.value * 10) / 10f;
+        bgUIController.dampingText.SetText(value.ToString());
+        
+        bgUIController.bgController.SetDamping(value);
+        
+        PlayerSettingPref.Instance.BGControllerSettings.Damping = value;
     }
 
     public void VolumeSliderValueChanged(float value)

@@ -79,10 +79,10 @@ public class MenuButtonController : MonoBehaviour
         else
         {
             // menu.DOScale(0, 0.5f);
+            PlayerSettingPref.Instance.Save();
             UIController.Instance.ToggleMenu(false).OnComplete(() =>
             {
                 menu.gameObject.SetActive(false);
-                PlayerSettingPref.Instance.Save();
             });
         }
     }

@@ -1493,7 +1493,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 217293236}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -6539,7 +6539,19 @@ MonoBehaviour:
   - eventID: 3
     callback:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 1857242327}
+          m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+          m_MethodName: DampingSliderValueChanged
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &1041429892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6585,12 +6597,24 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2037264475}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 3
   m_WholeNumbers: 0
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1857242327}
+        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_MethodName: DampingSliderValueChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1063271837
 GameObject:
   m_ObjectHideFlags: 0
@@ -6673,7 +6697,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 606170972}
   m_HandleRect: {fileID: 606170971}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -9486,7 +9510,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   animator: {fileID: 1667137986}
-  open: 1
+  open: 0
   menu: {fileID: 217293238}
 --- !u!95 &1667137986
 Animator:
