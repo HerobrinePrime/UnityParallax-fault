@@ -75,37 +75,44 @@ public class UIController : MonoBehaviour
         }
     }
 
+    #region Responsers
+
     public void ToggleReverse(bool reverse)
     {
-        Debug.Log("Toggle reverse");
         bgUIController.bgController.SetReversed(reverse);
+
         PlayerSettingPref.Instance.BGControllerSettings.Reverse = reverse;
     }
-    
+
+    public void ToggleUseParallax(bool useParallax)
+    {
+        bgUIController.bgController.SetUseParallax(useParallax);
+
+        PlayerSettingPref.Instance.BGControllerSettings.UseParallax = useParallax;
+    }
+
     public void ParallaxScaleSliderValueChanged(float value)
     {
-        // bgUIController.parallaxScaleInputField.text = value.ToString();
         var value2 = Mathf.Round(bgUIController.parallaxScaleSlider.value * 100) / 100f;
+
         bgUIController.parallaxScaleInputField.SetTextWithoutNotify(value2.ToString());
     }
 
     public void ParallaxScaleSliderValueChanged(BaseEventData data)
     {
-        Debug.Log("Parallax Scale Slider Value Changed");
         var value = Mathf.Round(bgUIController.parallaxScaleSlider.value * 100) / 100f;
         bgUIController.parallaxScaleInputField.SetTextWithoutNotify(value.ToString());
         bgUIController.bgController.SetParallaxScale(value);
+
         PlayerSettingPref.Instance.BGControllerSettings.ParallaxScale = value;
     }
-    
+
     public void ParallaxScaleInputFieldValueChanged(string value)
     {
-        Debug.Log("ParallaxScale Input Field Value Changed");
         try
         {
-            float parallaxScale = Mathf.Round(Mathf.Clamp(float.Parse(value), bgUIController.parallaxScaleSlider.minValue, bgUIController.parallaxScaleSlider.maxValue) * 100) / 100f;
-            // int parallaxScale = Int32.Parse(value);
-            // bgUIController.parallaxScaleSlider.value = parallaxScale;
+            float parallaxScale = Mathf.Round(Mathf.Clamp(float.Parse(value),
+                bgUIController.parallaxScaleSlider.minValue, bgUIController.parallaxScaleSlider.maxValue) * 100) / 100f;
             bgUIController.parallaxScaleSlider.SetValueWithoutNotify(parallaxScale);
 
             PlayerSettingPref.Instance.BGControllerSettings.ParallaxScale = parallaxScale;
@@ -117,15 +124,13 @@ public class UIController : MonoBehaviour
 
     public void ParallaxScaleInputFieldEndEdit(string value)
     {
-        Debug.Log("ParallaxScale Input Field End Edit");
         try
         {
-            float parallaxScale = Mathf.Round(Mathf.Clamp(float.Parse(value), bgUIController.parallaxScaleSlider.minValue, bgUIController.parallaxScaleSlider.maxValue) * 100) / 100f;
-            // int parallaxScale = Int32.Parse(value);
-            // bgUIController.parallaxScaleSlider.value = parallaxScale;
+            float parallaxScale = Mathf.Round(Mathf.Clamp(float.Parse(value),
+                bgUIController.parallaxScaleSlider.minValue, bgUIController.parallaxScaleSlider.maxValue) * 100) / 100f;
             bgUIController.parallaxScaleSlider.SetValueWithoutNotify(parallaxScale);
             bgUIController.bgController.SetParallaxScale(parallaxScale);
-            
+
             bgUIController.parallaxScaleInputField.SetTextWithoutNotify(parallaxScale.ToString());
 
             PlayerSettingPref.Instance.BGControllerSettings.ParallaxScale = parallaxScale;
@@ -137,114 +142,62 @@ public class UIController : MonoBehaviour
 
     public void VolumeSliderValueChanged(float value)
     {
-        Debug.Log("Volume Slider Value Changed");
         audioUIController.audioSource.volume = value;
+
         PlayerSettingPref.Instance.OtherSettings.Volume = value;
     }
 
     public void ToggleMute(bool mute)
     {
-        Debug.Log("Toggle mute");
         audioUIController.audioSource.mute = mute;
+
         PlayerSettingPref.Instance.OtherSettings.Muted = mute;
     }
 
-    // bool _isFirseTime = true;
     public void SetTransparency(float transparency)
     {
-        // if (_isFirseTime)
-        // {
-        //     _isFirseTime = false;
-        //     return;
-        // }
-
-        Debug.Log("Set transparency");
         menu.alpha = menuTransparencyUIController.MenuCurrentTransparency = transparency;
+
         PlayerSettingPref.Instance.OtherSettings.MenuTransparency = transparency;
     }
 
     public void SetHorizontalConstraint(float value)
     {
-        Debug.Log("Set horizontal constraint");
         bgUIController.bgController.SetHorizontalConstraint(value);
+
         PlayerSettingPref.Instance.BGControllerSettings.XConstraint = value;
     }
 
     public void SetVerticalConstraint(float value)
     {
-        Debug.Log("Set vertical constraint");
         bgUIController.bgController.SetVerticalConstraint(value);
+
         PlayerSettingPref.Instance.BGControllerSettings.YConstraint = value;
     }
 
     public void TargetFrameRateSliderValueChanged(float value)
     {
-        // applicationUIController.targetFrameRateInputField.text = value.ToString();
         applicationUIController.targetFrameRateText.SetText(value.ToString());
     }
 
     public void TargetFrameRateSliderValueChanged(BaseEventData data)
     {
-        Debug.Log("TargetFrameRate Slider Value Changed");
-        // applicationUIController.targetFrameRateInputField.text = value.ToString();
-        // applicationUIController.applicationSetting.SetTargetFrameRate(value);
-        // Debug.Log(applicationUIController.targetFrameRateSlider.value);
         var targetFrameRate = (int)applicationUIController.targetFrameRateSlider.value;
-        // applicationUIController.targetFrameRateInputField.text = targetFrameRate.ToString();
         applicationUIController.targetFrameRateText.SetText(targetFrameRate.ToString());
         applicationUIController.applicationSetting.SetTargetFrameRate(targetFrameRate);
 
         PlayerSettingPref.Instance.ApplicationSettings.TargetFrameRate = targetFrameRate;
     }
 
-    /*public void TargetFrameRateInputFieldValueChanged(string value)
-    {
-        Debug.Log("TargetFrameRate Input Field Value Changed");
-        try
-        {
-            int targetFrameRate = Math.Clamp(Int32.Parse(value), (int)applicationUIController.targetFrameRateSlider.minValue, 40);
-            
-            applicationUIController.targetFrameRateSlider.value = targetFrameRate;
-
-            PlayerSettingPref.Instance.ApplicationSettings.TargetFrameRate = targetFrameRate;
-        }
-        catch (Exception e)
-        {
-        }
-    }*/
-
-    /*public void TargetFrameRateInputFieldEndEdit(string value)
-    {
-        Debug.Log("TargetFrameRate Input Field End Edit");
-        try
-        {
-            int targetFrameRate = Math.Clamp(Int32.Parse(value), (int)applicationUIController.targetFrameRateSlider.minValue, 40);
-            Debug.Log(targetFrameRate);
-            applicationUIController.targetFrameRateSlider.value = targetFrameRate;
-            applicationUIController.applicationSetting.SetTargetFrameRate(targetFrameRate);
-            
-            applicationUIController.targetFrameRateText.SetText(targetFrameRate.ToString());
-            // applicationUIController.targetFrameRateInputField.SetTextWithoutNotify(targetFrameRate.ToString());
-            // applicationUIController.targetFrameRateInputField.ForceLabelUpdate();
-
-            PlayerSettingPref.Instance.ApplicationSettings.TargetFrameRate = targetFrameRate;
-        }
-        catch (Exception e)
-        {
-        }
-    }
-    */
-
     public void BackgroundRunningTypeDropdownValueChanged(int value)
     {
-        // applicationUIController.applicationSetting.SetBackgroundRunningType(value);        
-        Debug.Log(value);
         var type = (BackgroundRunningType)value;
-        Debug.Log(type);
         applicationUIController.applicationSetting.SetBackgroundRunningType(type);
 
         PlayerSettingPref.Instance.ApplicationSettings.BackgroundRunningType = type;
     }
+
+    #endregion
 
     public void InitFromSettings()
     {
@@ -261,12 +214,21 @@ public class UIController : MonoBehaviour
         applicationUIController.targetFrameRateSlider.SetValueWithoutNotify(applicationSettings.TargetFrameRate);
         applicationUIController.targetFrameRateText.SetText(applicationSettings.TargetFrameRate.ToString());
         // applicationUIController.targetFrameRateInputField.SetTextWithoutNotify(applicationSettings.TargetFrameRate.ToString());
-        applicationUIController.backgroundRunningTypeDropdown.SetValueWithoutNotify((int)applicationSettings.BackgroundRunningType);
+        applicationUIController.backgroundRunningTypeDropdown.SetValueWithoutNotify(
+            (int)applicationSettings.BackgroundRunningType);
         applicationUIController.backgroundRunningTypeDropdown.RefreshShownValue();
 
         bgUIController.reverseToggle.SetIsOnWithoutNotify(bgControllerSettings.Reverse);
+        // Debug.Log("Setting useParallaxToggle");
+        bgUIController.useParallaxToggle.SetIsOnWithoutNotify(bgControllerSettings.UseParallax);
+        // Debug.Log("Result: " +  bgUIController.useParallaxToggle.isOn);
+        bgUIController.useFullBGToggle.SetIsOnWithoutNotify(bgControllerSettings.UseFullBackground);
         bgUIController.parallaxScaleSlider.SetValueWithoutNotify(bgControllerSettings.ParallaxScale);
         bgUIController.parallaxScaleInputField.SetTextWithoutNotify(bgControllerSettings.ParallaxScale.ToString());
+        bgUIController.basicScaleSlider.SetValueWithoutNotify(bgControllerSettings.BasicScale);
+        bgUIController.basicScaleText.SetText(bgControllerSettings.BasicScale.ToString());
+        bgUIController.dampingSlider.SetValueWithoutNotify(bgControllerSettings.Damping);
+        bgUIController.dampingText.SetText(bgControllerSettings.Damping.ToString());
 
         audioUIController.volumeSlider.SetValueWithoutNotify(otherSettings.Volume);
         audioUIController.muteToggle.SetIsOnWithoutNotify(otherSettings.Muted);
@@ -295,7 +257,13 @@ public class BGUIController
 {
     public BGController bgController;
     public Toggle reverseToggle;
+    public Toggle useParallaxToggle;
     public Slider parallaxScaleSlider;
+    public Toggle useFullBGToggle;
+    public Slider basicScaleSlider;
+    public TMP_Text basicScaleText;
+    public Slider dampingSlider;
+    public TMP_Text dampingText;
     public TMP_InputField parallaxScaleInputField;
     public ConstraintsUIController constraintsUIController;
 }
@@ -336,6 +304,7 @@ public class ApplicationUIController
     public ApplicationSetting applicationSetting;
 
     public Slider targetFrameRateSlider;
+
     // public TMP_InputField targetFrameRateInputField;
     public TMP_Text targetFrameRateText;
     public TMP_Dropdown backgroundRunningTypeDropdown;

@@ -120,16 +120,26 @@ public class OtherSettings
 public class BGControllerSettings
 {
     [SerializeField] private bool reverse;
+    [SerializeField] private bool useParallax;
+    [SerializeField] private bool useFullBackground;
     [SerializeField] private float parallaxScale;
+    [SerializeField] private float basicScale;
+    [SerializeField] private float damping;
     [SerializeField] private float xConstraint;
     [SerializeField] private float yConstraint;
 
     #region MyRegion
 
-    public BGControllerSettings(bool reverse, float parallaxScale, float xConstraint, float yConstraint)
+    public BGControllerSettings(
+        bool reverse, bool useParallax, bool useFullBackground, float parallaxScale,
+        float basicScale, float damping, float xConstraint, float yConstraint)
     {
         this.reverse = reverse;
+        this.useParallax = useParallax;
+        this.useFullBackground = useFullBackground;
         this.parallaxScale = parallaxScale;
+        this.basicScale = basicScale;
+        this.damping = damping;
         this.xConstraint = xConstraint;
         this.yConstraint = yConstraint;
     }
@@ -140,10 +150,38 @@ public class BGControllerSettings
         set => reverse = value;
     }
 
+    public bool UseParallax
+    {
+        get
+        {
+            // Debug.Log("getting useParallax");
+            return useParallax;
+        }
+        set => useParallax = value;
+    }
+
+    public bool UseFullBackground
+    {
+        get => useFullBackground;
+        set => useFullBackground = value;
+    }
+
     public float ParallaxScale
     {
         get => parallaxScale;
         set => parallaxScale = value;
+    }
+
+    public float BasicScale
+    {
+        get => basicScale;
+        set => basicScale = value;
+    }
+
+    public float Damping
+    {
+        get => damping;
+        set => damping = value;
     }
 
     public float XConstraint

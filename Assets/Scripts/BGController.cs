@@ -114,10 +114,7 @@ public class BGController : MonoBehaviour
     {
         if (!useParallax)
         {
-            /*
-             * TODO: ReSetPosition should be called when useParallax changed
-             */
-            ReSetPosition();
+            // ReSetPosition();
             return;
         }
         Vector2 mousePosition = Mouse.current.position.ReadValue();
@@ -329,6 +326,17 @@ public class BGController : MonoBehaviour
         reverse = value;
     }
 
+    public void SetUseParallax(bool value)
+    {
+        useParallax = value;
+        if(!useParallax) ReSetPosition();
+    }
+
+    public void SetUseFullBackground(bool value)
+    {
+        useFullBackground = value;
+    }
+    
     public void SetParallaxScale(float value)
     {
         parallaxScale = value;
@@ -347,6 +355,16 @@ public class BGController : MonoBehaviour
     //     MoveToPosition(mousePosition);
     // }
 
+    public void SetBasicScale(float value)
+    {
+        _scale = value;
+    }
+
+    public void SetDamping(float value)
+    {
+        damping = value;
+    }
+
     public void SetHorizontalConstraint(float value)
     {
         horizontalConstraint = value;
@@ -364,18 +382,38 @@ public class BGController : MonoBehaviour
 
         ReSizeCamera();
 
+        
+        /*
+        this.reverse = reverse;
+        this.useParallax = useParallax;
+        this.useFullBackground = useFullBackground;
+        this.parallaxScale = parallaxScale;
+        this.basicScale = basicScale;
+        this.damping = damping;
+        this.xConstraint = xConstraint;
+        this.yConstraint = yConstraint;
+        */
+         
         this.SetReversed(bgControllerSettings.Reverse);
-        // Debug.Log(bgControllerSettings.ParallaxScale);
+        this.SetUseParallax(bgControllerSettings.UseParallax);
+        this.SetUseFullBackground(bgControllerSettings.UseFullBackground);
         this.SetParallaxScale(bgControllerSettings.ParallaxScale);
+        this.SetBasicScale(bgControllerSettings.BasicScale);
+        this.SetDamping(bgControllerSettings.Damping);
         this.SetHorizontalConstraint(bgControllerSettings.XConstraint);
         this.SetVerticalConstraint(bgControllerSettings.YConstraint);
     }
 
     public BGControllerSettings GetMetaSettings()
     {
+        // Debug.Log("GetMetaSettings: " +useParallax);
         return new BGControllerSettings(
             reverse,
+            useParallax,
+            useFullBackground,
             parallaxScale,
+            _scale,
+            damping,
             horizontalConstraint,
             verticleConstraint
         );
