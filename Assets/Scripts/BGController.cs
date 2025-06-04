@@ -21,8 +21,6 @@ using Debug = UnityEngine.Debug;
 public class BGController : MonoBehaviour
 {
     private const bool ResizeOnValidate = false;
-
-    
     
     /*
      * TODO:
