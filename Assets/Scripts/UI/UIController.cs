@@ -94,7 +94,7 @@ public class UIController : MonoBehaviour
     public void ToggleUseFullBackground(bool useFullBackground)
     {
         bgUIController.bgController.SetUseFullBackground(useFullBackground);
-        
+
         PlayerSettingPref.Instance.BGControllerSettings.UseFullBackground = useFullBackground;
     }
 
@@ -145,6 +145,22 @@ public class UIController : MonoBehaviour
         catch (Exception e)
         {
         }
+    }
+
+    public void BasicScaleSliderValueChanged(float value)
+    {
+        var value2 = Mathf.Round(value * 100) / 100f;
+        bgUIController.basicScaleText.SetText(value2.ToString());
+    }
+    public void BasicScaleSliderValueChanged(BaseEventData data)
+    {
+        Debug.Log("BasicScaleSliderValueChanged");
+        var value = Mathf.Round(bgUIController.basicScaleSlider.value * 100) / 100f;
+        bgUIController.basicScaleText.SetText(value.ToString());
+        
+        bgUIController.bgController.SetBasicScale(value);
+
+        PlayerSettingPref.Instance.BGControllerSettings.BasicScale = value;
     }
 
     public void VolumeSliderValueChanged(float value)

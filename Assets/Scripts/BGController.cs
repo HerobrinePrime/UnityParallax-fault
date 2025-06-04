@@ -367,6 +367,8 @@ public class BGController : MonoBehaviour
     public void SetBasicScale(float value)
     {
         _scale = value;
+        RecordScreenInfo();
+        RefreshPosition();
     }
 
     public void SetDamping(float value)
