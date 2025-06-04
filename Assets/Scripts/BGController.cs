@@ -22,23 +22,27 @@ public class BGController : MonoBehaviour
 {
     private const bool ResizeOnValidate = false;
 
-    public Layer[] layers;
-
-    // public Transform[] layers;
-    private List<Vector2> _layerRatios = new List<Vector2>();
+    
+    
+    /*
+     * TODO:
+     * 1.useParallax
+     * 2.useFullBackground
+     * 3.scale
+     * 4.damping
+     */
+    public bool reverse = false;
+    public bool useParallax = true;
     public float parallaxScale = 1f;
+    public bool useFullBackground = true;
     public Transform scale;
-
-    // public InputActionProperty mouseActionProperty;
-    // private InputAction _mouseAction;
-    // public bool fullBackgroundUsed = false;
+    public float damping = 0.5f;
     public float verticleConstraint = 1f;
     public float horizontalConstraint = 1f;
-
-    public bool reverse = false;
-    public float damping = 0.5f;
+    
+    public Layer[] layers;
     public AnimationCurve dampingCurve;
-
+    private List<Vector2> _layerRatios = new List<Vector2>();
     private Vector2 _lastSize = Vector2.zero;
 
     private float _scale
@@ -110,9 +114,21 @@ public class BGController : MonoBehaviour
 
     void Update()
     {
+        if (!useParallax)
+        {
+            /*
+             * TODO: ReSetPosition should be called when useParallax changed
+             */
+            ReSetPosition();
+            return;
+        }
         Vector2 mousePosition = Mouse.current.position.ReadValue();
-
         MoveToPosition(mousePosition);
+    }
+
+    void ReSetPosition()
+    {
+        MoveToPosition(_screenCenter);
     }
 
     void MoveToPosition(Vector2 mousePosition)
@@ -215,6 +231,9 @@ public class BGController : MonoBehaviour
                 bgBounds.Encapsulate(meshRenderer.bounds);
             }
         }
+        
+        var halfWidth = useFullBackground ? bgBounds.extents.x : bgBounds.extents.x / _scale;
+        var halfHeight = useFullBackground ? bgBounds.extents.y : bgBounds.extents.y / _scale;
 
         // Debug.DrawLine(bgBounds.min, bgBounds.max, Color.red, 60f);
         var cameraPoint = mainCamera.transform.position;
@@ -223,7 +242,7 @@ public class BGController : MonoBehaviour
         // Debug.DrawLine(cameraPointInZ, cameraPointInZ + Vector3.right * bgBounds.extents.x, Color.red, 60f);
 
         // Vector3 bgMaxPoint = bgBounds.max;
-        Vector3 bgMaxPoint = cameraPoint + Vector3.right * bgBounds.extents.x + Vector3.up * bgBounds.extents.y;
+        Vector3 bgMaxPoint = cameraPoint + Vector3.right * halfWidth + Vector3.up * halfHeight;
         Vector3 cameraMaxPoint = mainCamera.ViewportToWorldPoint(new Vector3(1f, 1f, 0));
         float xMaxDistance = bgMaxPoint.x - cameraMaxPoint.x;
         float yMaxDistance = bgMaxPoint.y - cameraMaxPoint.y;
@@ -319,7 +338,16 @@ public class BGController : MonoBehaviour
         // Debug.LogError("Need to Recalculate Info");
         ReScale();
         RecordScreenInfo();
+
+        // StartCoroutine(RefreshPosition());
     }
+
+    // IEnumerator RefreshPosition()
+    // {
+    //     yield return new WaitForSeconds(0.1f);
+    //     Vector2 mousePosition = Mouse.current.position.ReadValue();
+    //     MoveToPosition(mousePosition);
+    // }
 
     public void SetHorizontalConstraint(float value)
     {
