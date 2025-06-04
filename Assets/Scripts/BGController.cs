@@ -337,6 +337,7 @@ public class BGController : MonoBehaviour
     {
         useFullBackground = value;
         RecordScreenInfo();
+        RefreshPosition();
     }
 
     public void SetParallaxScale(float value)
