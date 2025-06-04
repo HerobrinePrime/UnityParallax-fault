@@ -40,7 +40,12 @@ public class BGController : MonoBehaviour
     public AnimationCurve dampingCurve;
 
     private Vector2 _lastSize = Vector2.zero;
-    private float _scale => scale.localScale.x;
+
+    private float _scale
+    {
+        get => scale.localScale.x;
+        set => scale.localScale = new Vector3(value, value, value);
+    }
 
     private Vector2 _screenCenter;
 
