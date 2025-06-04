@@ -335,6 +335,7 @@ public class BGController : MonoBehaviour
     public void SetUseFullBackground(bool value)
     {
         useFullBackground = value;
+        RecordScreenInfo();
     }
     
     public void SetParallaxScale(float value)

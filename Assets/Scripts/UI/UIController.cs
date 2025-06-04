@@ -91,6 +91,13 @@ public class UIController : MonoBehaviour
         PlayerSettingPref.Instance.BGControllerSettings.UseParallax = useParallax;
     }
 
+    public void ToggleUseFullBackground(bool useFullBackground)
+    {
+        bgUIController.bgController.SetUseFullBackground(useFullBackground);
+        
+        PlayerSettingPref.Instance.BGControllerSettings.UseFullBackground = useFullBackground;
+    }
+
     public void ParallaxScaleSliderValueChanged(float value)
     {
         var value2 = Mathf.Round(bgUIController.parallaxScaleSlider.value * 100) / 100f;
