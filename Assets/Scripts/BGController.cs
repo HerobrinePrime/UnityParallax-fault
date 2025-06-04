@@ -15,12 +15,13 @@ using Screen = UnityEngine.Device.Screen;
 using UnityEngine.Rendering;
 using UnityEngine.Serialization;
 using Debug = UnityEngine.Debug;
+
 // using Debug = DefaultNamespace.Debug.Debug;
 
 public class BGController : MonoBehaviour
 {
     private const bool ResizeOnValidate = false;
-    
+
     public Layer[] layers;
 
     // public Transform[] layers;
@@ -57,17 +58,18 @@ public class BGController : MonoBehaviour
         {
             throw new Exception("More than one BGController in scene");
         }
+
         Instance = this;
     }
 
     void Start()
     {
         InitializeFromSettings();
-        
+
         // ReSizeCamera();
         // ReScale();
         // RecordScreenInfo();
-        
+
         _screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
 
         _layerSeasonTimeTextureMap = layerSeasonTimeTextures.ToDictionary(
@@ -210,8 +212,13 @@ public class BGController : MonoBehaviour
         }
 
         // Debug.DrawLine(bgBounds.min, bgBounds.max, Color.red, 60f);
+        var cameraPoint = mainCamera.transform.position;
+        // var cameraPointInZ = new Vector3(cameraPoint.x, cameraPoint.y, bgBounds.center.z);
+        // Debug.DrawLine(cameraPointInZ, cameraPointInZ + Vector3.up * bgBounds.extents.y, Color.red, 60f);
+        // Debug.DrawLine(cameraPointInZ, cameraPointInZ + Vector3.right * bgBounds.extents.x, Color.red, 60f);
 
-        Vector3 bgMaxPoint = bgBounds.max;
+        // Vector3 bgMaxPoint = bgBounds.max;
+        Vector3 bgMaxPoint = cameraPoint + Vector3.right * bgBounds.extents.x + Vector3.up * bgBounds.extents.y;
         Vector3 cameraMaxPoint = mainCamera.ViewportToWorldPoint(new Vector3(1f, 1f, 0));
         float xMaxDistance = bgMaxPoint.x - cameraMaxPoint.x;
         float yMaxDistance = bgMaxPoint.y - cameraMaxPoint.y;
@@ -303,7 +310,7 @@ public class BGController : MonoBehaviour
     public void SetParallaxScale(float value)
     {
         parallaxScale = value;
-        
+
         // Debug.LogError("Need to Recalculate Info");
         ReScale();
         RecordScreenInfo();
@@ -323,16 +330,16 @@ public class BGController : MonoBehaviour
     public void InitializeFromSettings()
     {
         var bgControllerSettings = PlayerSettingPref.Instance.BGControllerSettings;
-        
+
         ReSizeCamera();
-        
+
         this.SetReversed(bgControllerSettings.Reverse);
         // Debug.Log(bgControllerSettings.ParallaxScale);
         this.SetParallaxScale(bgControllerSettings.ParallaxScale);
         this.SetHorizontalConstraint(bgControllerSettings.XConstraint);
         this.SetVerticalConstraint(bgControllerSettings.YConstraint);
     }
-    
+
     public BGControllerSettings GetMetaSettings()
     {
         return new BGControllerSettings(
@@ -349,7 +356,7 @@ public class BGController : MonoBehaviour
         // Debug.Log("Initializing BGController");
         // EditorApplication.update += ReSizeCamera;
     }
-    
+
     private void OnValidate()
     {
         if (!ResizeOnValidate) return;
