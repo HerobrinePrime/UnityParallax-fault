@@ -21,7 +21,7 @@ using Debug = UnityEngine.Debug;
 public class BGController : MonoBehaviour
 {
     private const bool ResizeOnValidate = false;
-    
+
     /*
      * TODO:
      * 1.useParallax
@@ -37,7 +37,7 @@ public class BGController : MonoBehaviour
     public float damping = 0.5f;
     public float verticleConstraint = 1f;
     public float horizontalConstraint = 1f;
-    
+
     public Layer[] layers;
     public AnimationCurve dampingCurve;
     private List<Vector2> _layerRatios = new List<Vector2>();
@@ -117,6 +117,7 @@ public class BGController : MonoBehaviour
             // ReSetPosition();
             return;
         }
+
         Vector2 mousePosition = Mouse.current.position.ReadValue();
         MoveToPosition(mousePosition);
     }
@@ -226,7 +227,7 @@ public class BGController : MonoBehaviour
                 bgBounds.Encapsulate(meshRenderer.bounds);
             }
         }
-        
+
         var halfWidth = useFullBackground ? bgBounds.extents.x : bgBounds.extents.x / _scale;
         var halfHeight = useFullBackground ? bgBounds.extents.y : bgBounds.extents.y / _scale;
 
@@ -329,7 +330,7 @@ public class BGController : MonoBehaviour
     public void SetUseParallax(bool value)
     {
         useParallax = value;
-        if(!useParallax) ReSetPosition();
+        if (!useParallax) ReSetPosition();
     }
 
     public void SetUseFullBackground(bool value)
@@ -337,7 +338,7 @@ public class BGController : MonoBehaviour
         useFullBackground = value;
         RecordScreenInfo();
     }
-    
+
     public void SetParallaxScale(float value)
     {
         parallaxScale = value;
@@ -347,6 +348,12 @@ public class BGController : MonoBehaviour
         RecordScreenInfo();
 
         // StartCoroutine(RefreshPosition());
+        RefreshPosition();
+    }
+
+    private void RefreshPosition()
+    {
+        _lastMousePosition = Vector2.zero;
     }
 
     // IEnumerator RefreshPosition()
@@ -383,7 +390,7 @@ public class BGController : MonoBehaviour
 
         ReSizeCamera();
 
-        
+
         /*
         this.reverse = reverse;
         this.useParallax = useParallax;
@@ -394,7 +401,7 @@ public class BGController : MonoBehaviour
         this.xConstraint = xConstraint;
         this.yConstraint = yConstraint;
         */
-         
+
         this.SetReversed(bgControllerSettings.Reverse);
         this.SetUseParallax(bgControllerSettings.UseParallax);
         this.SetUseFullBackground(bgControllerSettings.UseFullBackground);
