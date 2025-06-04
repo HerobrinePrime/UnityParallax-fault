@@ -14,11 +14,13 @@ using UnityEngine.Timeline;
 using Screen = UnityEngine.Device.Screen;
 using UnityEngine.Rendering;
 using UnityEngine.Serialization;
-// using Debug = UnityEngine.Debug;
-using Debug = DefaultNamespace.Debug.Debug;
+using Debug = UnityEngine.Debug;
+// using Debug = DefaultNamespace.Debug.Debug;
 
 public class BGController : MonoBehaviour
 {
+    private const bool ResizeOnValidate = false;
+    
     public Layer[] layers;
 
     // public Transform[] layers;
@@ -62,13 +64,11 @@ public class BGController : MonoBehaviour
     {
         InitializeFromSettings();
         
-        ReScale();
-        ReSizeCamera();
-
-        // _mouseAction = mouseActionProperty.action;
+        // ReSizeCamera();
+        // ReScale();
+        // RecordScreenInfo();
+        
         _screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
-
-        RecordScreenInfo();
 
         _layerSeasonTimeTextureMap = layerSeasonTimeTextures.ToDictionary(
             x => x.layerType,
@@ -303,13 +303,10 @@ public class BGController : MonoBehaviour
     public void SetParallaxScale(float value)
     {
         parallaxScale = value;
-        /*
-         * TODO: rescaled
-         */
-        Debug.LogError("Need to Recalculate Info");
-        // ReScale();
-        // ReSizeCamera();
-        // RecordScreenInfo();
+        
+        // Debug.LogError("Need to Recalculate Info");
+        ReScale();
+        RecordScreenInfo();
     }
 
     public void SetHorizontalConstraint(float value)
@@ -326,6 +323,9 @@ public class BGController : MonoBehaviour
     public void InitializeFromSettings()
     {
         var bgControllerSettings = PlayerSettingPref.Instance.BGControllerSettings;
+        
+        ReSizeCamera();
+        
         this.SetReversed(bgControllerSettings.Reverse);
         // Debug.Log(bgControllerSettings.ParallaxScale);
         this.SetParallaxScale(bgControllerSettings.ParallaxScale);
@@ -349,9 +349,10 @@ public class BGController : MonoBehaviour
         // Debug.Log("Initializing BGController");
         // EditorApplication.update += ReSizeCamera;
     }
-
+    
     private void OnValidate()
     {
+        if (!ResizeOnValidate) return;
         ReScale();
         // ReSizeCamera();
         RecordScreenInfo();

@@ -77,24 +77,29 @@ public class UIController : MonoBehaviour
 
     public void ToggleReverse(bool reverse)
     {
+        Debug.Log("Toggle reverse");
         bgUIController.bgController.SetReversed(reverse);
         PlayerSettingPref.Instance.BGControllerSettings.Reverse = reverse;
     }
 
-    public void ParallaxScaleSliderValueChanged(float value)
+    public void ParallaxScaleSliderValueChanged(BaseEventData data)
     {
+        Debug.Log("Parallax Scale Slider Value Changed");
+        var value = bgUIController.parallaxScaleSlider.value;
         bgUIController.bgController.SetParallaxScale(value);
         PlayerSettingPref.Instance.BGControllerSettings.ParallaxScale = value;
     }
 
     public void VolumeSliderValueChanged(float value)
     {
+        Debug.Log("Volume Slider Value Changed");
         audioUIController.audioSource.volume = value;
         PlayerSettingPref.Instance.OtherSettings.Volume = value;
     }
 
     public void ToggleMute(bool mute)
     {
+        Debug.Log("Toggle mute");
         audioUIController.audioSource.mute = mute;
         PlayerSettingPref.Instance.OtherSettings.Muted = mute;
     }
@@ -115,12 +120,14 @@ public class UIController : MonoBehaviour
 
     public void SetHorizontalConstraint(float value)
     {
+        Debug.Log("Set horizontal constraint");
         bgUIController.bgController.SetHorizontalConstraint(value);
         PlayerSettingPref.Instance.BGControllerSettings.XConstraint = value;
     }
 
     public void SetVerticalConstraint(float value)
     {
+        Debug.Log("Set vertical constraint");
         bgUIController.bgController.SetVerticalConstraint(value);
         PlayerSettingPref.Instance.BGControllerSettings.YConstraint = value;
     }
@@ -185,22 +192,23 @@ public class UIController : MonoBehaviour
         var applicationSettings = PlayerSettingPref.Instance.ApplicationSettings;
 
         //read ui data
-        applicationUIController.targetFrameRateSlider.value = applicationSettings.TargetFrameRate;
-        applicationUIController.targetFrameRateInputField.text = applicationSettings.TargetFrameRate.ToString();
-        applicationUIController.backgroundRunningTypeDropdown.value = (int)applicationSettings.BackgroundRunningType;
+        applicationUIController.targetFrameRateSlider.SetValueWithoutNotify(applicationSettings.TargetFrameRate);
+        applicationUIController.targetFrameRateInputField.SetTextWithoutNotify(applicationSettings.TargetFrameRate.ToString());
+        applicationUIController.backgroundRunningTypeDropdown.SetValueWithoutNotify((int)applicationSettings.BackgroundRunningType);
         applicationUIController.backgroundRunningTypeDropdown.RefreshShownValue();
-        
-        bgUIController.reverseToggle.isOn = bgControllerSettings.Reverse;
-        bgUIController.parallaxScaleSlider.value = bgControllerSettings.ParallaxScale;
 
-        audioUIController.volumeSlider.value = otherSettings.Volume;
-        audioUIController.muteToggle.isOn = otherSettings.Muted;
+        bgUIController.reverseToggle.SetIsOnWithoutNotify(bgControllerSettings.Reverse);
+        bgUIController.parallaxScaleSlider.SetValueWithoutNotify(bgControllerSettings.ParallaxScale);
 
-        // menuTransparencyUIController.transparencySlider.value = otherSettings.MenuTransparency;
+        audioUIController.volumeSlider.SetValueWithoutNotify(otherSettings.Volume);
+        audioUIController.muteToggle.SetIsOnWithoutNotify(otherSettings.Muted);
+
         menuTransparencyUIController.transparencySlider.SetValueWithoutNotify(otherSettings.MenuTransparency);
-        
-        bgUIController.constraintsUIController.horizontalConstraintSlider.value = bgControllerSettings.XConstraint;
-        bgUIController.constraintsUIController.verticalConstraintSlider.value = bgControllerSettings.YConstraint;
+
+        bgUIController.constraintsUIController.horizontalConstraintSlider.SetValueWithoutNotify(bgControllerSettings
+            .XConstraint);
+        bgUIController.constraintsUIController.verticalConstraintSlider.SetValueWithoutNotify(bgControllerSettings
+            .YConstraint);
     }
 
 

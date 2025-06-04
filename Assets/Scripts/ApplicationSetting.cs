@@ -117,7 +117,7 @@ public class ApplicationSetting : MonoBehaviour
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        SetBackgroundRunningType(backgroundRunningType);
+        // SetBackgroundRunningType(backgroundRunningType);
     }
 #endif
 }
