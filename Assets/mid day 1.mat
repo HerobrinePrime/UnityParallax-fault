@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: bg
+  m_Name: mid day 1
   m_Shader: {fileID: -6465566751694194690, guid: 37964ad7a7be1ed4780d7cb7c8d34dc1, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -25,11 +25,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Texture1:
-        m_Texture: {fileID: 2800000, guid: a21c6cdfe26daa84a95fada868b845d3, type: 3}
+        m_Texture: {fileID: 2800000, guid: e82e72570216c024cacf3515f705d2a1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture2:
-        m_Texture: {fileID: 2800000, guid: 0d97d754165831243b2c1d1d5304a956, type: 3}
+        m_Texture: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -48,7 +48,7 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _time: 1
+    - _time: 0
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -1,6 +1,6 @@
 ﻿using System;
-using Unity.Android.Gradle;
 using UnityEngine;
+using Utils;
 using Debug = UnityEngine.Debug;
 
 

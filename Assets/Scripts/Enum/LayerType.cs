@@ -4,7 +4,6 @@
     {
         bg,
         mid,
-        ft,
-        fl
+        front,
     }
 }

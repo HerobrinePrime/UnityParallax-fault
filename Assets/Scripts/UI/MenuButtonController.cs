@@ -1,109 +1,108 @@
-using System;
 using System.Collections;
 using DG.Tweening;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Utils;
 
-public class MenuButtonController : MonoBehaviour
+namespace UI
 {
-    public AnimationCurve animationCurve;
-    public Animator animator;
-    public bool open = false;
-
-    public CanvasGroup menu;
-
-    private CanvasGroup _canvasGroup;
-
-    private void Start()
+    public class MenuButtonController : MonoBehaviour
     {
-        // _animator = GetComponent<Animator>();
-        _canvasGroup = GetComponent<CanvasGroup>();
-    }
+        public AnimationCurve animationCurve;
+        public Animator animator;
+        public bool open = false;
 
-    public void OnPointerEnter()
-    {
-        // Debug.Log("OnPointerEnter");
-        _canvasGroup.DOFade(1, 0.2f);
-    }
+        public CanvasGroup menu;
 
+        private CanvasGroup _canvasGroup;
 
-    public void OnPointerExit()
-    {
-        // Debug.Log("OnPointerExit");
-        _canvasGroup.DOFade(0.3f, 0.2f);
-    }
-
-    public void OnPointerClick()
-    {
-        if (_isAnimating) return;
-        _isAnimating = true;
-
-        open = !open;
-        ToggleMenu();
-        if (_coroutine != null)
+        private void Start()
         {
-            StopCoroutine(_coroutine);
+            // _animator = GetComponent<Animator>();
+            _canvasGroup = GetComponent<CanvasGroup>();
+            animator.SetFloat("time", 0);
         }
 
-        _coroutine = StartCoroutine(OpenMenu(open));
-    }
-
-    private bool _isAnimating = false;
-    private Coroutine _coroutine = null;
-
-    private IEnumerator OpenMenu(bool open)
-    {
-        float time = 0;
-        while (time < UIController.Instance.audioUIController.muteToggleDduration)
+        public void OnPointerEnter()
         {
-            time += Time.deltaTime;
-            float process = time / UIController.Instance.audioUIController.muteToggleDduration;
-            float currentValue = animationCurve.Evaluate(open ? process : 1 - process);
-            animator.SetFloat("time", currentValue);
-            yield return null;
+            // Debug.Log("OnPointerEnter");
+            _canvasGroup.DOFade(1, 0.2f);
         }
 
-        _isAnimating = false;
-    }
 
-    void ToggleMenu()
-    {
-        if (open)
+        public void OnPointerExit()
         {
-            // menu.DOScale(1, 0.5f);
-            menu.gameObject.SetActive(true);
-            // menu.DOFade(1, duration);
-            UIController.Instance.ToggleMenu(true);
+            // Debug.Log("OnPointerExit");
+            _canvasGroup.DOFade(0.3f, 0.2f);
         }
-        else
+
+        public void OnPointerClick()
         {
-            // menu.DOScale(0, 0.5f);
-            PlayerSettingPref.Instance.Save();
-            UIController.Instance.ToggleMenu(false).OnComplete(() =>
+            if (_isAnimating) return;
+            _isAnimating = true;
+
+            open = !open;
+            ToggleMenu();
+            if (_coroutine != null)
             {
-                menu.gameObject.SetActive(false);
-            });
+                StopCoroutine(_coroutine);
+            }
+
+            _coroutine = StartCoroutine(OpenMenu(open));
         }
-    }
+
+        private bool _isAnimating = false;
+        private Coroutine _coroutine = null;
+
+        private IEnumerator OpenMenu(bool open)
+        {
+            float time = 0;
+            while (time < UIController.Instance.audioUIController.muteToggleDduration)
+            {
+                time += Time.deltaTime;
+                float process = time / UIController.Instance.audioUIController.muteToggleDduration;
+                float currentValue = animationCurve.Evaluate(open ? process : 1 - process);
+                animator.SetFloat("time", currentValue);
+                yield return null;
+            }
+
+            _isAnimating = false;
+        }
+
+        void ToggleMenu()
+        {
+            if (open)
+            {
+                // menu.DOScale(1, 0.5f);
+                menu.gameObject.SetActive(true);
+                // menu.DOFade(1, duration);
+                UIController.Instance.ToggleMenu(true);
+            }
+            else
+            {
+                // menu.DOScale(0, 0.5f);
+                PlayerSettingPref.Instance.Save();
+                UIController.Instance.ToggleMenu(false).OnComplete(() => { menu.gameObject.SetActive(false); });
+            }
+        }
 
 #if UNITY_EDITOR
 
-    private void OnValidate()
-    {
-        if (open)
+        private void OnValidate()
         {
-            // menu.localScale = new Vector3(1, 1, 1);
-            menu.alpha = 1;
-            animator.SetFloat("time", 1);
+            if (open)
+            {
+                // menu.localScale = new Vector3(1, 1, 1);
+                menu.alpha = 1;
+                animator.SetFloat("time", 1);
+            }
+            else
+            {
+                // menu.localScale = new Vector3(0, 0, 0);
+                menu.alpha = 0;
+                animator.SetFloat("time", 0);
+            }
         }
-        else
-        {
-            // menu.localScale = new Vector3(0, 0, 0);
-            menu.alpha = 0;
-            animator.SetFloat("time", 0);
-        }
-    }
 
 #endif
+    }
 }

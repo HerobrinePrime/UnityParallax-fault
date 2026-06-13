@@ -14,6 +14,7 @@ using UnityEngine.Timeline;
 using Screen = UnityEngine.Device.Screen;
 using UnityEngine.Rendering;
 using UnityEngine.Serialization;
+using Utils;
 using Debug = UnityEngine.Debug;
 
 // using Debug = DefaultNamespace.Debug.Debug;
@@ -57,6 +58,12 @@ public class BGController : MonoBehaviour
     private Dictionary<LayerType, Dictionary<Season, Dictionary<TimeOfDay, Texture2D>>> _layerSeasonTimeTextureMap;
     private Dictionary<LayerType, TransitionMaterial> _layerMaterialMap;
 
+    // [FormerlySerializedAs("currentSeason")]
+    // public Season nextSeason;
+    //
+    // [FormerlySerializedAs("currentTimeOfDay")]
+    // public TimeOfDay nextTimeOfDay;
+
     public static BGController Instance;
 
     private void Awake()
@@ -67,10 +74,7 @@ public class BGController : MonoBehaviour
         }
 
         Instance = this;
-    }
 
-    void Start()
-    {
         InitializeFromSettings();
 
         // ReSizeCamera();
@@ -93,6 +97,34 @@ public class BGController : MonoBehaviour
             x => x.layerType,
             x => new TransitionMaterial(x.material)
         );
+    }
+
+    void Start()
+    {
+        // InitializeFromSettings();
+        //
+        // // ReSizeCamera();
+        // // ReScale();
+        // // RecordScreenInfo();
+        //
+        // _screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+        //
+        // _layerSeasonTimeTextureMap = layerSeasonTimeTextures.ToDictionary(
+        //     x => x.layerType,
+        //     x => x.seasonTextures.ToDictionary(
+        //         y => y.season,
+        //         y => y.timeTextures.ToDictionary(
+        //             z => z.time,
+        //             z => z.timeTexture
+        //         )
+        //     )
+        // );
+        // _layerMaterialMap = layerSeasonTimeTextures.ToDictionary(
+        //     x => x.layerType,
+        //     x => new TransitionMaterial(x.material)
+        // );
+
+        // AfterTransition();
 
         // var a = _layerSeasonTimeTextureMap[LayerType.bg][Season.Autumn][TimeOfDay.Day];
         // var m = _layerMaterialMap[LayerType.bg];
@@ -103,12 +135,74 @@ public class BGController : MonoBehaviour
         // _layerMaterialMap[LayerType.bg].time = 1;
         // _layerMaterialMap[LayerType.bg].textureAfter = _layerMaterialMap[LayerType.bg].textureBefore;
 
+
         for (int i = 0; i < layers.Length; i++)
         {
             // _currentCoroutines[i] = null;
             _tweensDictionary[i] = null;
         }
     }
+
+    public void Transition(TimeOfDay timeOfDayBeforeTransition, TimeOfDay currentTimeOfDay, Season currentSeason,
+        float transitionDuration,
+        float transitionStartValue = 0f)
+    {
+        foreach (LayerType layer in System.Enum.GetValues(typeof(LayerType)))
+        {
+            _layerMaterialMap[layer].textureBefore =
+                _layerSeasonTimeTextureMap[layer][currentSeason][timeOfDayBeforeTransition];
+            _layerMaterialMap[layer].time = 0;
+            _layerMaterialMap[layer].textureAfter = _layerSeasonTimeTextureMap[layer][currentSeason][currentTimeOfDay];
+
+
+            _layerMaterialMap[layer].time = transitionStartValue;
+            // Debug.Log(" _layerMaterialMap[layer].time: " + _layerMaterialMap[layer].time);
+            Debug.Log("Transition Duration: " + transitionDuration);
+            //cleaner needed
+            DOTween.To(() => { return _layerMaterialMap[layer].time; },
+                    x =>
+                    {
+                        Debug.Log("Transitioning " + layer + " time: " + x);
+                        _layerMaterialMap[layer].time = x;
+                    },
+                    1f,
+                    transitionDuration * 60)
+                .SetEase(Ease.Linear);
+        }
+    }
+
+    // void AfterTransition()
+    // {
+    //     foreach (LayerType layer in System.Enum.GetValues(typeof(LayerType)))
+    //     {
+    //         _layerMaterialMap[layer].textureBefore = _layerMaterialMap[layer].textureAfter;
+    //         _layerMaterialMap[layer].textureAfter = _layerSeasonTimeTextureMap[layer][nextSeason][nextTimeOfDay];
+    //
+    //         switch (nextSeason)
+    //         {
+    //             case Season.Winter:
+    //                 nextSeason = Season.Spring;
+    //                 break;
+    //             case Season.Spring:
+    //                 nextSeason = Season.Summer;
+    //                 break;
+    //             case Season.Summer:
+    //                 nextSeason = Season.Autumn;
+    //                 break;
+    //             case Season.Autumn:
+    //                 nextSeason = Season.Winter;
+    //                 break;
+    //         }
+    //
+    //         // switch (nextTimeOfDay)
+    //         // {
+    //         //     case TimeOfDay.Day:
+    //         //         nextTimeOfDay = TimeOfDay.Evening;
+    //         //         break;
+    //         //     case TimeOfDay.Evening:
+    //         // }
+    //     }
+    // }
 
     void Update()
     {
@@ -278,10 +372,17 @@ public class BGController : MonoBehaviour
         }
     }
 
+// #if UNITY_EDITOR
     void ReSizeCamera()
     {
         Debug.Log("Resizing camera");
-        Vector2 size = Handles.GetMainGameViewSize();
+        // Vector2 size = Handles.GetMainGameViewSize();
+        Vector2 size = new Vector2(Screen.width, Screen.height);
+
+#if UNITY_EDITOR
+        size = Handles.GetMainGameViewSize();
+#endif
+
         if ((size != _lastSize) && (layers != null && layers.Length > 0))
             // if (true)
         {
@@ -321,6 +422,8 @@ public class BGController : MonoBehaviour
 
         _lastSize = size;
     }
+
+// #endif
 
     public void SetReversed(bool value)
     {
@@ -415,6 +518,7 @@ public class BGController : MonoBehaviour
         this.SetVerticalConstraint(bgControllerSettings.YConstraint);
     }
 
+
     public BGControllerSettings GetMetaSettings()
     {
         // Debug.Log("GetMetaSettings: " +useParallax);
@@ -429,6 +533,7 @@ public class BGController : MonoBehaviour
             verticleConstraint
         );
     }
+
 
 #if UNITY_EDITOR
     BGController()
