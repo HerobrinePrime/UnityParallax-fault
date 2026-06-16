@@ -1596,14 +1596,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgController: {fileID: 7322656306300385031}
   forceTime: 0
-  forceSeason: 1
+  forceSeason: 0
   forceCurrentSeason: 3
   forceCurrentTimeOfDay: 0
   dawnStartHour: 6
   dayStartHour: 9
   duskStartHour: 16
   nightStartHour: 19
-  transitionDurationMinute: 60
+  transitionDurationMinute: 1
 --- !u!4 &223706480
 Transform:
   m_ObjectHideFlags: 0

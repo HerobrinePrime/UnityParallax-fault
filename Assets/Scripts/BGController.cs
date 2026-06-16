@@ -194,7 +194,7 @@ public class BGController : MonoBehaviour
                 Debug.Log("Killed tween for layer: " + layerType);
             }
 
-            layerTweens[layerType] = null;
+            // layerTweens[layerType] = null;
         }
     }
 
