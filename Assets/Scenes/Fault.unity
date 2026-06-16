@@ -1493,7 +1493,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 217293236}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -1601,9 +1601,9 @@ MonoBehaviour:
   forceCurrentTimeOfDay: 0
   dawnStartHour: 6
   dayStartHour: 9
-  duskStartHour: 16
-  nightStartHour: 19
-  transitionDurationMinute: 1
+  duskStartHour: 17
+  nightStartHour: 20
+  transitionDurationMinute: 10
 --- !u!4 &223706480
 Transform:
   m_ObjectHideFlags: 0
@@ -2116,7 +2116,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 709753963}
   m_Direction: 0
   m_MinValue: 10
-  m_MaxValue: 60
+  m_MaxValue: 120
   m_WholeNumbers: 1
   m_Value: 10
   m_OnValueChanged:
@@ -9676,7 +9676,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   animator: {fileID: 1667137986}
-  open: 0
+  open: 1
   menu: {fileID: 217293238}
 --- !u!95 &1667137986
 Animator:

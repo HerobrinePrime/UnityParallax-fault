@@ -103,12 +103,13 @@ public class TimeCalculator : MonoBehaviour
     private void DetectTimeChange(DateTime now)
     {
         TimeOfDay newTimeOfDay = CheckTimeOfDay(now);
+        float _transitionDurationMinute = transitionDurationMinute;
         // _timeOfDayBeforeTransition = timeOfDay.TimeOfDayBeforeTransition;
         _timeOfDayBeforeTransition = _currentTimeOfDay;
 
         Season newSeason = CheckSeason();
 
-        if (newTimeOfDay != _currentTimeOfDay || newSeason != _currentSeason)
+        if (newTimeOfDay != _currentTimeOfDay || newSeason != _currentSeason || _lastForceTime != forceTime)
         {
             if (newTimeOfDay != _currentTimeOfDay)
             {
@@ -132,7 +133,7 @@ public class TimeCalculator : MonoBehaviour
 
                 // Debug.Log("Force Time or Season toggled, transition duration set to 0");
                 Debug.Log("Force Season toggled, transition duration set to 0");
-                transitionDurationMinute = 0;
+                _transitionDurationMinute = 0;
             }
 
             if (_lastForceTime != forceTime)
@@ -143,10 +144,17 @@ public class TimeCalculator : MonoBehaviour
                 InitTime(now);
                 return;
             }
+            
+            //when forceTime is true and TimeOfDay is changed, duration should be 0;
+            if(forceTime)
+            {
+                Debug.Log("Force Time is enabled, transition duration set to 0");
+                _transitionDurationMinute = 0;
+            }
 
             // Trigger time of day change event here
             bgController.Transition(_timeOfDayBeforeTransition, _currentTimeOfDay, _currentSeason,
-                transitionDurationMinute);
+                _transitionDurationMinute);
         }
     }
 
