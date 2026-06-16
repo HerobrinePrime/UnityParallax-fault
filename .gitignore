@@ -2,6 +2,7 @@
 [Tt]emp/
 [Oo]bj/
 [Bb]uild/
+[Bb]uilt/
 [Bb]uilds/
 [Ll]ogs/
 [Uu]serSettings/
@@ -17,24 +18,24 @@
 **/Assets/StreamingAssets/aa.meta
 **/assets/streamingassets/*/aa/*
 
-# Unity3D ¶¬“I PlasticSCM •¶Œ
+# Unity3D ï¿½ï¿½ï¿½ï¿½ï¿½I PlasticSCM ï¿½ï¿½ï¿½ï¿½
 /Assets/Plugins/PlasticSCM*
 /assets/plugins/PlasticSCM*
 
-# Asset store H‹ï‡Œ
+# Asset store ï¿½Hï¿½ï‡ï¿½ï¿½
 [Aa]ssets/AssetStoreTools*
 **/assets/assetstoretools
 
-# Visual Studio ?‘¶–Ú?
+# Visual Studio ?ï¿½ï¿½ï¿½ï¿½?
 .vs/
 
-# JetBrain ?‘¶–Ú?
+# JetBrain ?ï¿½ï¿½ï¿½ï¿½?
 .idea/
 
-# Gradle ?‘¶–Ú?
+# Gradle ?ï¿½ï¿½ï¿½ï¿½?
 .gradle/
 
-# ©?¶¬“I VS/MD/Consulo ‰ğ™r•ûˆÄ˜a?–Ú•¶Œ
+# ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½ï¿½I VS/MD/Consulo ï¿½ï¿½rï¿½ï¿½ï¿½Ä˜a?ï¿½Ú•ï¿½ï¿½ï¿½
 ExportedObj/
 .consulo/
 *.csproj
@@ -52,25 +53,25 @@ ExportedObj/
 *.opendb
 *.VC.db
 
-# Unity3D ¶¬“I meta •¶Œ
+# Unity3D ï¿½ï¿½ï¿½ï¿½ï¿½I meta ï¿½ï¿½ï¿½ï¿½
 *.pidb.meta
 *.pdb.meta
 *.mdb.meta
 
-# Unity3D İ•ö??’†¶¬“I•¶Œ
+# Unity3D ï¿½İ•ï¿½??ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½
 sysinfo.txt
 
-# ?Œš•¶Œ
+# ?ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 *.apk
 *.unitypackage
 
-# Crashlytics ¶¬“I•¶Œ
+# Crashlytics ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½
 crashlytics-build.properties
 
-# Mac •¶Œ
+# Mac ï¿½ï¿½ï¿½ï¿½
 .DS_Store*
 
-# Windows •¶Œ
+# Windows ï¿½ï¿½ï¿½ï¿½
 Thumbs.db
 Desktop.ini
 
