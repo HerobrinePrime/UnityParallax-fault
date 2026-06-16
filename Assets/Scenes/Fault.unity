@@ -7135,6 +7135,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc612093bce1714428dd266b60f6c764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 73504357}
+  ignoredProcessNames:
+  - unity
+  - wallpaper32
+  - fault
+  - chrome
 --- !u!1 &1101968544
 GameObject:
   m_ObjectHideFlags: 0
