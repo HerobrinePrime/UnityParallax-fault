@@ -58,6 +58,10 @@ public class BGController : MonoBehaviour
     private Dictionary<LayerType, Dictionary<Season, Dictionary<TimeOfDay, Texture2D>>> _layerSeasonTimeTextureMap;
     private Dictionary<LayerType, TransitionMaterial> _layerMaterialMap;
 
+    private Dictionary<LayerType, TweenerCore<float, float, FloatOptions>> layerTweens =
+        new Dictionary<LayerType, TweenerCore<float, float, FloatOptions>>();
+
+
     // [FormerlySerializedAs("currentSeason")]
     // public Season nextSeason;
     //
@@ -147,6 +151,16 @@ public class BGController : MonoBehaviour
         float transitionDuration,
         float transitionStartValue = 0f)
     {
+        CleanTweens();
+        // foreach (LayerType layerType in layerTweens.Keys)
+        // {
+        //     if (layerTweens[layerType] != null && layerTweens[layerType].IsActive())
+        //     {
+        //         layerTweens[layerType].Kill();
+        //         Debug.Log("Killed previous tween for layer: " + layerType);
+        //     }
+        // }
+
         foreach (LayerType layer in System.Enum.GetValues(typeof(LayerType)))
         {
             _layerMaterialMap[layer].textureBefore =
@@ -158,16 +172,29 @@ public class BGController : MonoBehaviour
             _layerMaterialMap[layer].time = transitionStartValue;
             // Debug.Log(" _layerMaterialMap[layer].time: " + _layerMaterialMap[layer].time);
             Debug.Log("Transition Duration: " + transitionDuration);
-            //cleaner needed
-            DOTween.To(() => { return _layerMaterialMap[layer].time; },
-                    x =>
-                    {
-                        Debug.Log("Transitioning " + layer + " time: " + x);
-                        _layerMaterialMap[layer].time = x;
-                    },
-                    1f,
-                    transitionDuration * 60)
+            //cancel previous needed
+            var layerTween = DOTween.To(() => { return _layerMaterialMap[layer].time; }, x =>
+                {
+                    Debug.Log("Transitioning " + layer + " time: " + x);
+                    _layerMaterialMap[layer].time = x;
+                }, 1f, transitionDuration * 60)
                 .SetEase(Ease.Linear);
+
+            layerTweens[layer] = layerTween;
+        }
+    }
+
+    public void CleanTweens()
+    {
+        foreach (LayerType layerType in layerTweens.Keys)
+        {
+            if (layerTweens[layerType] != null && layerTweens[layerType].IsActive())
+            {
+                layerTweens[layerType].Kill();
+                Debug.Log("Killed tween for layer: " + layerType);
+            }
+
+            layerTweens[layerType] = null;
         }
     }
 

@@ -1596,14 +1596,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgController: {fileID: 7322656306300385031}
   forceTime: 0
-  forceSeason: 0
-  forceCurrentSeason: 1
+  forceSeason: 1
+  forceCurrentSeason: 3
   forceCurrentTimeOfDay: 0
   dawnStartHour: 6
   dayStartHour: 9
   duskStartHour: 16
   nightStartHour: 19
-  transitionDurationMinute: 0.03
+  transitionDurationMinute: 60
 --- !u!4 &223706480
 Transform:
   m_ObjectHideFlags: 0
@@ -6862,7 +6862,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 606170971}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.99999994
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -7135,12 +7135,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc612093bce1714428dd266b60f6c764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 73504357}
-  ignoredProcessNames:
-  - unity
-  - wallpaper32
-  - fault
-  - chrome
 --- !u!1 &1101968544
 GameObject:
   m_ObjectHideFlags: 0
@@ -10324,7 +10318,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1850827381}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.2691968
+  m_Size: 0.26919684
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
