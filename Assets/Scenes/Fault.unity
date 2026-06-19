@@ -15594,7 +15594,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   animator: {fileID: 1667137986}
-  open: 1
+  open: 0
   menu: {fileID: 1781624393}
 --- !u!95 &1667137986
 Animator:
@@ -17105,7 +17105,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1781624391}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

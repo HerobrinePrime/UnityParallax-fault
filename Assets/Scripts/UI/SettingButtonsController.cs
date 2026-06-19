@@ -35,10 +35,10 @@ public class SettingButtonsController : MonoBehaviour
 
         // settingMenuContainer.position = new Vector3(-containerWidth * (int)settingType, settingMenuContainer.position.y, settingMenuContainer.position.z);
         // settingMenuContainer.padding.left = -(int)(containerWidth * (int)settingType);
-        // settingMenuContainer.anchoredPosition = new Vector2(-containerWidth * (int)settingType, settingMenuContainer.anchoredPosition.y);
-        settingMenuChangingTween = DOTween.To(() => settingMenuContainer.anchoredPosition,
-            x => settingMenuContainer.anchoredPosition = x,
-            new Vector2(-containerWidth * (int)settingType, settingMenuContainer.anchoredPosition.y),
-            settingMenuChangingDuration);
+        settingMenuContainer.anchoredPosition = new Vector2(-containerWidth * (int)settingType, settingMenuContainer.anchoredPosition.y);
+        // settingMenuChangingTween = DOTween.To(() => settingMenuContainer.anchoredPosition,
+        //     x => settingMenuContainer.anchoredPosition = x,
+        //     new Vector2(-containerWidth * (int)settingType, settingMenuContainer.anchoredPosition.y),
+        //     settingMenuChangingDuration);
     }
 }
