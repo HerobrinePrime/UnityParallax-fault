@@ -42,9 +42,13 @@ public class TimeCalculator : MonoBehaviour
     public Season forceCurrentSeason;
     public TimeOfDay forceCurrentTimeOfDay;
     public int dawnStartHour = 6;
+    public int dawnStartMinute = 0;
     public int dayStartHour = 9;
+    public int dayStartMinute = 0;
     public int duskStartHour = 16;
+    public int duskStartMinute = 0;
     public int nightStartHour = 19;
+    public int nightStartMinute = 0;
     public float transitionDurationMinute = 30;
 
 
@@ -144,9 +148,9 @@ public class TimeCalculator : MonoBehaviour
                 InitTime(now);
                 return;
             }
-            
+
             //when forceTime is true and TimeOfDay is changed, duration should be 0;
-            if(forceTime)
+            if (forceTime)
             {
                 Debug.Log("Force Time is enabled, transition duration set to 0");
                 _transitionDurationMinute = 0;
@@ -180,6 +184,7 @@ public class TimeCalculator : MonoBehaviour
         float durationMinute = 0;
         float transitionStartValue = 0;
         float diffHour = 0;
+        float diffMinute = 0;
         TimeOfDay timeOfDayBeforeTransition;
 
         // _currentTimeOfDay = CheckTimeOfDay(now);
@@ -351,5 +356,15 @@ public class TimeCalculator : MonoBehaviour
             //     CurrentTimeOfDay = TimeOfDay.Night
             // };
         }
+    }
+
+    public void ToggleForceTime()
+    {
+        forceTime = !forceTime;
+    }
+
+    public void ToggleForceSeason()
+    {
+        forceSeason = !forceSeason;
     }
 }

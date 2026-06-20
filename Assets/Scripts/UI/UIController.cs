@@ -115,7 +115,9 @@ namespace UI
             try
             {
                 float parallaxScale = Mathf.Round(Mathf.Clamp(float.Parse(value),
-                    bgUIController.parallaxScaleSlider.minValue, bgUIController.parallaxScaleSlider.maxValue) * 100) / 100f;
+                                          bgUIController.parallaxScaleSlider.minValue,
+                                          bgUIController.parallaxScaleSlider.maxValue) * 100) /
+                                      100f;
                 bgUIController.parallaxScaleSlider.SetValueWithoutNotify(parallaxScale);
 
                 PlayerSettingPref.Instance.BGControllerSettings.ParallaxScale = parallaxScale;
@@ -130,7 +132,9 @@ namespace UI
             try
             {
                 float parallaxScale = Mathf.Round(Mathf.Clamp(float.Parse(value),
-                    bgUIController.parallaxScaleSlider.minValue, bgUIController.parallaxScaleSlider.maxValue) * 100) / 100f;
+                                          bgUIController.parallaxScaleSlider.minValue,
+                                          bgUIController.parallaxScaleSlider.maxValue) * 100) /
+                                      100f;
                 bgUIController.parallaxScaleSlider.SetValueWithoutNotify(parallaxScale);
                 bgUIController.bgController.SetParallaxScale(parallaxScale);
 
@@ -169,9 +173,9 @@ namespace UI
         {
             var value = Mathf.Round(bgUIController.dampingSlider.value * 10) / 10f;
             bgUIController.dampingText.SetText(value.ToString());
-        
+
             bgUIController.bgController.SetDamping(value);
-        
+
             PlayerSettingPref.Instance.BGControllerSettings.Damping = value;
         }
 
@@ -343,5 +347,16 @@ namespace UI
         // public TMP_InputField targetFrameRateInputField;
         public TMP_Text targetFrameRateText;
         public TMP_Dropdown backgroundRunningTypeDropdown;
+    }
+
+    [Serializable]
+    public class TimeUIController
+    {
+        public TimeCalculator TimeCalculator;
+        public Toggle ForceTimeToggle;
+        public Toggle ForceSeasonToggle;
+        public TMP_Dropdown SeasonDropdown;
+        public TMP_Dropdown TODDropdown;
+        
     }
 }
