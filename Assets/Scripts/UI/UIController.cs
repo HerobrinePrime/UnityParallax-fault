@@ -238,7 +238,7 @@ namespace UI
 
         #endregion
 
-        public void InitFromSettings()
+        private void InitFromSettings()
         {
             //init other settings
             var otherSettings = PlayerSettingPref.Instance.OtherSettings;
@@ -349,14 +349,5 @@ namespace UI
         public TMP_Dropdown backgroundRunningTypeDropdown;
     }
 
-    [Serializable]
-    public class TimeUIController
-    {
-        public TimeCalculator TimeCalculator;
-        public Toggle ForceTimeToggle;
-        public Toggle ForceSeasonToggle;
-        public TMP_Dropdown SeasonDropdown;
-        public TMP_Dropdown TODDropdown;
-        
-    }
+    
 }

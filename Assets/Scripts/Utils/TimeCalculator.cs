@@ -8,6 +8,7 @@ public class TimeCalculator : MonoBehaviour
     private TimeCalculator _calculator;
     private DateTime now = default;
     public BGController bgController;
+    public TimeUIController timeUIController;
 
     public DateTime Now
     {
@@ -41,6 +42,7 @@ public class TimeCalculator : MonoBehaviour
     private bool _lastForceSeason;
     public Season forceCurrentSeason;
     public TimeOfDay forceCurrentTimeOfDay;
+    public bool AutoCalculateSunPosition = false;
     public int dawnStartHour = 6;
     public int dawnStartMinute = 0;
     public int dayStartHour = 9;
@@ -204,46 +206,103 @@ public class TimeCalculator : MonoBehaviour
         }
         else
         {
-            if (now.Hour >= dawnStartHour && now.Hour < dayStartHour)
+            // // if (now.Hour >= dawnStartHour && now.Hour < dayStartHour)
+            // if (
+            //     (now.Hour == dawnStartHour && now.Minute >= dawnStartMinute) ||
+            //     (now.Hour > dawnStartHour && now.Hour < dayStartHour)
+            // )
+            // {
+            //     _currentTimeOfDay = TimeOfDay.Evening;
+            //     // _timeOfDayBeforeTransition = TimeOfDay.Night;
+            //     timeOfDayBeforeTransition = TimeOfDay.Night;
+            //     diffHour = now.Hour - dawnStartHour;
+            // }
+            // // else if (now.Hour >= dayStartHour && now.Hour < duskStartHour)
+            // else if (
+            //     (now.Hour == dayStartHour && now.Minute >= dayStartMinute) ||
+            //     (now.Hour > dayStartHour && now.Hour < duskStartHour)
+            // )
+            // {
+            //     _currentTimeOfDay = TimeOfDay.Day;
+            //     timeOfDayBeforeTransition = TimeOfDay.Evening;
+            //     diffHour = now.Hour - dayStartHour;
+            // }
+            // // else if (now.Hour >= duskStartHour && now.Hour < nightStartHour)
+            // else if (
+            //     (now.Hour == duskStartHour && now.Minute >= duskStartMinute) ||
+            //     (now.Hour > duskStartHour && now.Hour < nightStartHour)
+            // )
+            // {
+            //     _currentTimeOfDay = TimeOfDay.Evening;
+            //     timeOfDayBeforeTransition = TimeOfDay.Day;
+            //     diffHour = now.Hour - duskStartHour;
+            // }
+            // else
+            // {
+            //     _currentTimeOfDay = TimeOfDay.Night;
+            //     timeOfDayBeforeTransition = TimeOfDay.Evening;
+            //     if (now.Hour >= nightStartHour)
+            //     {
+            //         diffHour = now.Hour - nightStartHour;
+            //     }
+            //     else
+            //     {
+            //         diffHour = now.Hour + (24 - nightStartHour);
+            //     }
+            // }
+
+            int current = ToMinutes(now.Hour, now.Minute);
+
+            int dawnStart = ToMinutes(dawnStartHour, dawnStartMinute);
+            int dayStart = ToMinutes(dayStartHour, dayStartMinute);
+            int duskStart = ToMinutes(duskStartHour, duskStartMinute);
+            int nightStart = ToMinutes(nightStartHour, nightStartMinute);
+
+            if (current >= dawnStart && current < dayStart)
             {
                 _currentTimeOfDay = TimeOfDay.Evening;
-                // _timeOfDayBeforeTransition = TimeOfDay.Night;
                 timeOfDayBeforeTransition = TimeOfDay.Night;
-                diffHour = now.Hour - dawnStartHour;
+                diffMinute = current - dawnStart;
             }
-            else if (now.Hour >= dayStartHour && now.Hour < duskStartHour)
+            else if (current >= dayStart && current < duskStart)
             {
                 _currentTimeOfDay = TimeOfDay.Day;
                 timeOfDayBeforeTransition = TimeOfDay.Evening;
-                diffHour = now.Hour - dayStartHour;
+                diffMinute = current - dayStart;
             }
-            else if (now.Hour >= duskStartHour && now.Hour < nightStartHour)
+            else if (current >= duskStart && current < nightStart)
             {
                 _currentTimeOfDay = TimeOfDay.Evening;
                 timeOfDayBeforeTransition = TimeOfDay.Day;
-                diffHour = now.Hour - duskStartHour;
+                diffMinute = current - duskStart;
             }
             else
             {
                 _currentTimeOfDay = TimeOfDay.Night;
                 timeOfDayBeforeTransition = TimeOfDay.Evening;
-                if (now.Hour >= nightStartHour)
+                if (current >= nightStart)
                 {
-                    diffHour = now.Hour - nightStartHour;
+                    diffMinute = current - nightStart;
                 }
                 else
                 {
-                    diffHour = now.Hour + (24 - nightStartHour);
+                    diffMinute = current + (24 * 60 - nightStart);
                 }
             }
 
-            if (diffHour * 60 + now.Minute < transitionDurationMinute)
+            // if (diffHour * 60 + now.Minute < transitionDurationMinute)
+            // {
+            //     // transitionStartValue = (float)now.Minute / transitionDurationMinute;
+            //     // duration = transitionDurationMinute - now.Minute;
+            //     transitionStartValue = (diffHour * 60 + now.Minute) / transitionDurationMinute;
+            //     // Debug.Log("Transition Start Value: " + transitionStartValue);
+            //     durationMinute = transitionDurationMinute - (diffHour * 60 + now.Minute);
+            // }
+
+            if (diffMinute < transitionDurationMinute)
             {
-                // transitionStartValue = (float)now.Minute / transitionDurationMinute;
-                // duration = transitionDurationMinute - now.Minute;
-                transitionStartValue = (diffHour * 60 + now.Minute) / transitionDurationMinute;
-                // Debug.Log("Transition Start Value: " + transitionStartValue);
-                durationMinute = transitionDurationMinute - (diffHour * 60 + now.Minute);
+                transitionStartValue = diffMinute / transitionDurationMinute;
+                durationMinute = transitionDurationMinute - diffMinute;
             }
         }
 
@@ -320,7 +379,15 @@ public class TimeCalculator : MonoBehaviour
             return forceCurrentTimeOfDay;
         }
 
-        if (now.Hour >= dawnStartHour && now.Hour < dayStartHour)
+        int current = ToMinutes(now.Hour, now.Minute);
+
+        int dawnStart = ToMinutes(dawnStartHour, dawnStartMinute);
+        int dayStart = ToMinutes(dayStartHour, dayStartMinute);
+        int duskStart = ToMinutes(duskStartHour, duskStartMinute);
+        int nightStart = ToMinutes(nightStartHour, nightStartMinute);
+
+        // if (now.Hour >= dawnStartHour && now.Hour < dayStartHour)
+        if (current >= dawnStart && current < dayStart)
         {
             return TimeOfDay.Evening;
             // return new TimeOfDayStruct
@@ -329,7 +396,8 @@ public class TimeCalculator : MonoBehaviour
             //     CurrentTimeOfDay = TimeOfDay.Evening
             // };
         }
-        else if (now.Hour >= dayStartHour && now.Hour < duskStartHour)
+        // else if (now.Hour >= dayStartHour && now.Hour < duskStartHour)
+        else if (current >= dayStart && current < duskStart)
         {
             return TimeOfDay.Day;
             // return new TimeOfDayStruct
@@ -338,7 +406,8 @@ public class TimeCalculator : MonoBehaviour
             //     CurrentTimeOfDay = TimeOfDay.Day
             // };
         }
-        else if (now.Hour >= duskStartHour && now.Hour < nightStartHour)
+        // else if (now.Hour >= duskStartHour && now.Hour < nightStartHour)
+        else if (current >= duskStart && current < nightStart)
         {
             return TimeOfDay.Evening;
             // return new TimeOfDayStruct
@@ -358,6 +427,11 @@ public class TimeCalculator : MonoBehaviour
         }
     }
 
+    private int ToMinutes(int hour, int minute)
+    {
+        return hour * 60 + minute;
+    }
+
     public void ToggleForceTime()
     {
         forceTime = !forceTime;
@@ -366,5 +440,98 @@ public class TimeCalculator : MonoBehaviour
     public void ToggleForceSeason()
     {
         forceSeason = !forceSeason;
+    }
+
+    public void ToggleAutoCalculateSunPosition()
+    {
+        AutoCalculateSunPosition = !AutoCalculateSunPosition;
+    }
+
+    public void SetTOD(int value)
+    {
+        var timeOfDay = (TimeOfDay)value;
+        forceCurrentTimeOfDay = timeOfDay;
+    }
+
+    public void SetSeason(int value)
+    {
+        var season = (Season)value;
+        forceCurrentSeason = season;
+    }
+
+    public void OnDawnHChanged(int value)
+    {
+        dawnStartHour = value;
+        OnSettingsChanged();
+    }
+
+    public void OnDawnMChanged(int value)
+    {
+        dawnStartMinute = value;
+        OnSettingsChanged();
+    }
+
+    public void OnDayHChanged(int value)
+    {
+        dayStartHour = value;
+        OnSettingsChanged();
+    }
+
+    public void OnDayMChanged(int value)
+    {
+        dayStartMinute = value;
+        OnSettingsChanged();
+    }
+
+    public void OnDuskHChanged(int value)
+    {
+        duskStartHour = value;
+        OnSettingsChanged();
+    }
+
+    public void OnDuskMChanged(int value)
+    {
+        duskStartMinute = value;
+        OnSettingsChanged();
+    }
+
+    public void OnNightHChanged(int value)
+    {
+        nightStartHour = value;
+        OnSettingsChanged();
+    }
+
+    public void OnNightMChanged(int value)
+    {
+        nightStartMinute = value;
+        OnSettingsChanged();
+    }
+
+    public void OnTDFEndEdit(string value)
+    {
+        if (value == "")
+        {
+            // Debug.Log("Transition Duration Minute changed: " + "0");
+            transitionDurationMinute = 0;
+            timeUIController.transitionDurationInputField.text = "0";
+            OnSettingsChanged();
+            return;
+        }
+
+        if (float.TryParse(value, out float result))
+        {
+            if (transitionDurationMinute != result)
+            {
+                transitionDurationMinute = result;
+                // Debug.Log("Transition Duration Minute changed: " + result);
+                OnSettingsChanged();
+            }
+        }
+    }
+
+    public void OnSettingsChanged()
+    {
+        Debug.Log("Setting changed, reinitializing time");
+        InitTime(DateTime.Now);
     }
 }

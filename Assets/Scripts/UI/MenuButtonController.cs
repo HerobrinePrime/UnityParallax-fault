@@ -7,7 +7,7 @@ namespace UI
 {
     public class MenuButtonController : MonoBehaviour
     {
-        public AnimationCurve animationCurve;
+        // public AnimationCurve animationCurve;
         public Animator animator;
         public bool open = false;
 
@@ -37,36 +37,46 @@ namespace UI
 
         public void OnPointerClick()
         {
-            if (_isAnimating) return;
-            _isAnimating = true;
+            // if (_isAnimating) return;
+            // _isAnimating = true;
 
             open = !open;
             ToggleMenu();
-            if (_coroutine != null)
-            {
-                StopCoroutine(_coroutine);
-            }
+            // if (_coroutine != null)
+            // {
+            //     StopCoroutine(_coroutine);
+            // }
 
-            _coroutine = StartCoroutine(OpenMenu(open));
+            // _coroutine = StartCoroutine(OpenMenu(open));
+            if (open)
+            {
+                // animator.SetFloat("time", 1);
+                DOTween.To(() => animator.GetFloat("time"), x => animator.SetFloat("time", x), 1, UIController.Instance.audioUIController.muteToggleDduration).SetEase(Ease.InOutSine);
+            }
+            else
+            {
+                // animator.SetFloat("time", 0);
+                DOTween.To(() => animator.GetFloat("time"), x => animator.SetFloat("time", x), 0, UIController.Instance.audioUIController.muteToggleDduration).SetEase(Ease.InOutSine);
+            }
         }
 
         private bool _isAnimating = false;
         private Coroutine _coroutine = null;
 
-        private IEnumerator OpenMenu(bool open)
-        {
-            float time = 0;
-            while (time < UIController.Instance.audioUIController.muteToggleDduration)
-            {
-                time += Time.deltaTime;
-                float process = time / UIController.Instance.audioUIController.muteToggleDduration;
-                float currentValue = animationCurve.Evaluate(open ? process : 1 - process);
-                animator.SetFloat("time", currentValue);
-                yield return null;
-            }
-
-            _isAnimating = false;
-        }
+        // private IEnumerator OpenMenu(bool open)
+        // {
+        //     float time = 0;
+        //     while (time < UIController.Instance.audioUIController.muteToggleDduration)
+        //     {
+        //         time += Time.deltaTime;
+        //         float process = time / UIController.Instance.audioUIController.muteToggleDduration;
+        //         float currentValue = animationCurve.Evaluate(open ? process : 1 - process);
+        //         animator.SetFloat("time", currentValue);
+        //         yield return null;
+        //     }
+        //
+        //     _isAnimating = false;
+        // }
 
         void ToggleMenu()
         {

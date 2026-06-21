@@ -1,4 +1,5 @@
 ﻿using System;
+using Enum;
 using UI;
 using UnityEngine;
 
@@ -33,6 +34,14 @@ namespace Utils
         {
             get => applicationSettings;
             set => applicationSettings = value;
+        }
+
+        [SerializeField] private TimeSettings timeSettings;
+
+        public TimeSettings TimeSettings
+        {
+            get => timeSettings;
+            set => timeSettings = value;
         }
 
         private static PlayerSettingPref _instance;
@@ -223,6 +232,133 @@ namespace Utils
         {
             get => backgroundRunningType;
             set => backgroundRunningType = value;
+        }
+
+        #endregion
+    }
+
+    [Serializable]
+    public class TimeSettings
+    {
+        [SerializeField] private bool forceTime;
+        [SerializeField] private bool forceSeason;
+        [SerializeField] private Season season;
+        [SerializeField] private TimeOfDay timeOfDay;
+        [SerializeField] private bool autoCalculateSunPosition;
+        [SerializeField] private int dawnStartHour;
+        [SerializeField] private int dawnStartMinute;
+        [SerializeField] private int dayStartHour;
+        [SerializeField] private int dayStartMinute;
+        [SerializeField] private int duskStartHour;
+        [SerializeField] private int duskStartMinute;
+        [SerializeField] private int nightStartHour;
+        [SerializeField] private int nightStartMinute;
+        [SerializeField] private float transitionDuration;
+
+        #region MyRegion
+
+        public TimeSettings(bool forceTime, bool forceSeason, Season season, TimeOfDay timeOfDay,
+            bool autoCalculateSunPosition, int dawnStartHour, int dawnStartMinute, int dayStartHour, int dayStartMinute,
+            int duskStartHour, int duskStartMinute, int nightStartHour, int nightStartMinute, float transitionDuration)
+        {
+            this.forceTime = forceTime;
+            this.forceSeason = forceSeason;
+            this.season = season;
+            this.timeOfDay = timeOfDay;
+            this.autoCalculateSunPosition = autoCalculateSunPosition;
+            this.dawnStartHour = dawnStartHour;
+            this.dawnStartMinute = dawnStartMinute;
+            this.dayStartHour = dayStartHour;
+            this.dayStartMinute = dayStartMinute;
+            this.duskStartHour = duskStartHour;
+            this.duskStartMinute = duskStartMinute;
+            this.nightStartHour = nightStartHour;
+            this.nightStartMinute = nightStartMinute;
+            this.transitionDuration = transitionDuration;
+        }
+
+        public bool ForceTime
+        {
+            get => forceTime;
+            set => forceTime = value;
+        }
+
+        public bool ForceSeason
+        {
+            get => forceSeason;
+            set => forceSeason = value;
+        }
+
+        public Season Season
+        {
+            get => season;
+            set => season = value;
+        }
+
+        public TimeOfDay TimeOfDay
+        {
+            get => timeOfDay;
+            set => timeOfDay = value;
+        }
+
+        public bool AutoCalculateSunPosition
+        {
+            get => autoCalculateSunPosition;
+            set => autoCalculateSunPosition = value;
+        }
+
+        public int DawnStartHour
+        {
+            get => dawnStartHour;
+            set => dawnStartHour = value;
+        }
+
+        public int DawnStartMinute
+        {
+            get => dawnStartMinute;
+            set => dawnStartMinute = value;
+        }
+
+        public int DayStartHour
+        {
+            get => dayStartHour;
+            set => dayStartHour = value;
+        }
+
+        public int DayStartMinute
+        {
+            get => dayStartMinute;
+            set => dayStartMinute = value;
+        }
+
+        public int DuskStartHour
+        {
+            get => duskStartHour;
+            set => duskStartHour = value;
+        }
+
+        public int DuskStartMinute
+        {
+            get => duskStartMinute;
+            set => duskStartMinute = value;
+        }
+
+        public int NightStartHour
+        {
+            get => nightStartHour;
+            set => nightStartHour = value;
+        }
+
+        public int NightStartMinute
+        {
+            get => nightStartMinute;
+            set => nightStartMinute = value;
+        }
+
+        public float TransitionDuration
+        {
+            get => transitionDuration;
+            set => transitionDuration = value;
         }
 
         #endregion
