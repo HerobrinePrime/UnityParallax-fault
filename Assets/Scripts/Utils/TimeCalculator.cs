@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Enum;
 using UnityEngine;
+using Utils;
 
 public class TimeCalculator : MonoBehaviour
 {
@@ -435,76 +436,102 @@ public class TimeCalculator : MonoBehaviour
     public void ToggleForceTime()
     {
         forceTime = !forceTime;
+
+        PlayerSettingPref.Instance.TimeSettings.ForceTime = forceTime;
     }
 
     public void ToggleForceSeason()
     {
         forceSeason = !forceSeason;
+
+        PlayerSettingPref.Instance.TimeSettings.ForceSeason = forceSeason;
     }
 
     public void ToggleAutoCalculateSunPosition()
     {
         AutoCalculateSunPosition = !AutoCalculateSunPosition;
+
+        PlayerSettingPref.Instance.TimeSettings.AutoCalculateSunPosition = AutoCalculateSunPosition;
     }
 
     public void SetTOD(int value)
     {
         var timeOfDay = (TimeOfDay)value;
         forceCurrentTimeOfDay = timeOfDay;
+
+        PlayerSettingPref.Instance.TimeSettings.TimeOfDay = timeOfDay;
     }
 
     public void SetSeason(int value)
     {
         var season = (Season)value;
         forceCurrentSeason = season;
+
+        PlayerSettingPref.Instance.TimeSettings.Season = season;
     }
 
     public void OnDawnHChanged(int value)
     {
         dawnStartHour = value;
         OnSettingsChanged();
+
+        PlayerSettingPref.Instance.TimeSettings.DawnStartHour = dawnStartHour;
     }
 
     public void OnDawnMChanged(int value)
     {
         dawnStartMinute = value;
         OnSettingsChanged();
+
+        PlayerSettingPref.Instance.TimeSettings.DawnStartMinute = dawnStartMinute;
     }
 
     public void OnDayHChanged(int value)
     {
         dayStartHour = value;
         OnSettingsChanged();
+
+        PlayerSettingPref.Instance.TimeSettings.DayStartHour = dayStartHour;
     }
 
     public void OnDayMChanged(int value)
     {
         dayStartMinute = value;
         OnSettingsChanged();
+
+        PlayerSettingPref.Instance.TimeSettings.DayStartMinute = dayStartMinute;
     }
 
     public void OnDuskHChanged(int value)
     {
         duskStartHour = value;
         OnSettingsChanged();
+
+        PlayerSettingPref.Instance.TimeSettings.DuskStartHour = duskStartHour;
     }
 
     public void OnDuskMChanged(int value)
     {
         duskStartMinute = value;
         OnSettingsChanged();
+
+        PlayerSettingPref.Instance.TimeSettings.DuskStartMinute = duskStartMinute;
     }
 
     public void OnNightHChanged(int value)
     {
         nightStartHour = value;
         OnSettingsChanged();
+
+        PlayerSettingPref.Instance.TimeSettings.NightStartHour = nightStartHour;
     }
 
     public void OnNightMChanged(int value)
     {
         nightStartMinute = value;
         OnSettingsChanged();
+
+        PlayerSettingPref.Instance.TimeSettings.NightStartMinute = nightStartMinute;
     }
 
     public void OnTDFEndEdit(string value)
@@ -514,6 +541,8 @@ public class TimeCalculator : MonoBehaviour
             // Debug.Log("Transition Duration Minute changed: " + "0");
             transitionDurationMinute = 0;
             timeUIController.transitionDurationInputField.text = "0";
+
+            PlayerSettingPref.Instance.TimeSettings.TransitionDuration = transitionDurationMinute;
             OnSettingsChanged();
             return;
         }
@@ -524,6 +553,7 @@ public class TimeCalculator : MonoBehaviour
             {
                 transitionDurationMinute = result;
                 // Debug.Log("Transition Duration Minute changed: " + result);
+                PlayerSettingPref.Instance.TimeSettings.TransitionDuration = transitionDurationMinute;
                 OnSettingsChanged();
             }
         }

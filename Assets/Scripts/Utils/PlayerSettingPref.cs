@@ -83,7 +83,7 @@ namespace Utils
             this.ApplicationSettings = ApplicationSetting.Instance.GetMetaSettings();
             this.OtherSettings = UIController.Instance.GetMetaSettings();
             this.BGControllerSettings = BGController.Instance.GetMetaSettings();
-
+            this.TimeSettings = TimeUIController.Instance.GetMetaSettings();
             // this.isInitialized = true;
         }
     }

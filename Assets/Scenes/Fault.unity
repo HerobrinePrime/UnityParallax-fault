@@ -4418,8 +4418,8 @@ MonoBehaviour:
   timeUIController: {fileID: 1857242328}
   forceTime: 0
   forceSeason: 0
-  forceCurrentSeason: 3
-  forceCurrentTimeOfDay: 2
+  forceCurrentSeason: 0
+  forceCurrentTimeOfDay: 0
   AutoCalculateSunPosition: 0
   dawnStartHour: 6
   dawnStartMinute: 0
@@ -17424,7 +17424,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 606170971}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.99999994
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -24499,7 +24499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1667137986}
-  open: 1
+  open: 0
   menu: {fileID: 1781624393}
 --- !u!95 &1667137986
 Animator:
@@ -26076,7 +26076,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1850827381}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.22359517
+  m_Size: 0.22359516
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -26365,7 +26365,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1781624391}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -27366,6 +27366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d614dd00e596a7a4bb99df63527910bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TimeCalculator: {fileID: 223706479}
   forceTimeToggle: {fileID: 542469940}
   TODDropdown: {fileID: 1541671556}
   forceSeasonToggle: {fileID: 212499759}
