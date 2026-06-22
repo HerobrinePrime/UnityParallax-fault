@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Enum;
 using UI;
 using UnityEngine;
@@ -58,9 +59,15 @@ namespace Utils
                     }
                     else
                     {
-                        Debug.Log("Setting not found, creating new setting using current value");
-                        _instance = new PlayerSettingPref();
-                        _instance.InitializeNewSetting();
+                        Debug.Log("Setting not found, creating new setting using default value");
+                        // _instance = new PlayerSettingPref();
+                        // _instance.InitializeNewSetting();
+
+                        string path = Path.Combine(Application.streamingAssetsPath, "defaultSettings.json");
+                        string json = File.ReadAllText(path);
+                        _instance = JsonUtility.FromJson<PlayerSettingPref>(json);
+                        PlayerPrefs.SetString(Key, json);
+                        PlayerPrefs.Save();
                     }
                 }
 
@@ -75,17 +82,18 @@ namespace Utils
             PlayerPrefs.Save();
         }
 
-        public void InitializeNewSetting()
-        {
-            /*
-             * TODO: Get default values from BGController | ApplicationSetting | UIController
-             */
-            this.ApplicationSettings = ApplicationSetting.Instance.GetMetaSettings();
-            this.OtherSettings = UIController.Instance.GetMetaSettings();
-            this.BGControllerSettings = BGController.Instance.GetMetaSettings();
-            this.TimeSettings = TimeUIController.Instance.GetMetaSettings();
-            // this.isInitialized = true;
-        }
+        // public void InitializeNewSetting()
+        // {
+        //     /*
+        //      * TODO: Get default values from BGController | ApplicationSetting | UIController
+        //      */
+        //     this.ApplicationSettings = ApplicationSetting.Instance.GetMetaSettings();
+        //     this.OtherSettings = UIController.Instance.GetMetaSettings();
+        //     Debug.Log(BGController.Instance);
+        //     this.BGControllerSettings = BGController.Instance.GetMetaSettings();
+        //     this.TimeSettings = TimeUIController.Instance.GetMetaSettings();
+        //     // this.isInitialized = true;
+        // }
     }
 
     [Serializable]
