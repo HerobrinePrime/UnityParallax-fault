@@ -17,6 +17,7 @@
 **/assets/addressableassetsdata/*/*.bin*
 **/Assets/StreamingAssets/aa.meta
 **/assets/streamingassets/*/aa/*
+**/Assets/StreamingAssets/bgms/*
 
 # Unity3D �����I PlasticSCM ����
 /Assets/Plugins/PlasticSCM*
