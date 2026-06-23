@@ -4,15 +4,18 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
-using Debug = DefaultNamespace.Debug.Debug;
 
 public class AudioSystemController : MonoBehaviour
 {
+    public AudioSource AudioSource;
+    
     public List<string> allowedExtensions = new List<string> { ".mp3", ".wav", ".ogg", ".flac" };
     public List<AudioClip> bgmClips;
 
     private void Awake()
     {
+        
+        //Do I need rescan folder when open UI?
         string bgmsFolderPath = Path.Combine(Application.streamingAssetsPath, "bgms");
 
         string[] audioFiles = Directory.GetFiles(bgmsFolderPath);
@@ -22,13 +25,15 @@ public class AudioSystemController : MonoBehaviour
             string filePath = audioFiles[i];
             string extension = Path.GetExtension(filePath).ToLower();
 
-            // Check if the file has an allowed extension
             if (allowedExtensions.Contains(extension))
             {
-                // Load the audio clip from the file
                 StartCoroutine(LoadAudioClip(filePath, extension));
             }
         }
+    }
+    
+    private void Start()
+    {
     }
 
     private IEnumerator LoadAudioClip(string filePath, string extension)
@@ -46,10 +51,10 @@ public class AudioSystemController : MonoBehaviour
                 Debug.LogError(www.error);
                 yield break;
             }
-            
+
             AudioClip audioClip = www.GetAudioClip();
-            
-            Debug.Log($"Loaded audio clip: {audioClip.name}---------------------------------------------");
+            audioClip.name = Path.GetFileName(filePath);
+            // Debug.Log($"Loaded audio clip: {audioClip.name}---------------------------------------------");
             bgmClips.Add(audioClip);
         }
         else
@@ -58,7 +63,7 @@ public class AudioSystemController : MonoBehaviour
                 url,
                 GetAudioType(extension)
             );
-            
+
             yield return www.SendWebRequest();
 
             if (www.result != UnityWebRequest.Result.Success)
@@ -68,8 +73,8 @@ public class AudioSystemController : MonoBehaviour
             }
 
             AudioClip audioClip = DownloadHandlerAudioClip.GetContent(www);
-            
-            Debug.Log($"Loaded audio clip: {audioClip.name}---------------------------------------------");
+            audioClip.name = Path.GetFileName(filePath);
+            // Debug.Log($"Loaded audio clip: {audioClip.name}---------------------------------------------");
             bgmClips.Add(audioClip);
         }
     }
@@ -91,7 +96,5 @@ public class AudioSystemController : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-    }
+    
 }

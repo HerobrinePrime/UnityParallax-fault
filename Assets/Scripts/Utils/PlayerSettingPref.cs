@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Enum;
 using UI;
@@ -370,5 +371,14 @@ namespace Utils
         }
 
         #endregion
+    }
+
+
+    [Serializable]
+    public class AudioSettings
+    {
+        [SerializeField] public List<string> audioList;
+        
+        
     }
 }

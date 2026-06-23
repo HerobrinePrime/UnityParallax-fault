@@ -1164,7 +1164,6 @@ MonoBehaviour:
   - .wav
   - .ogg
   - .flac
-  - .m4a
   bgmClips: []
 --- !u!1 &74632961
 GameObject:
@@ -17443,8 +17442,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 606170972}
   m_HandleRect: {fileID: 606170971}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.99999994
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -25409,7 +25408,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1956037367}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.37073168
+  m_Size: 0.37073174
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -26096,7 +26095,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1850827381}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.22359516
+  m_Size: 0.22359517
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
