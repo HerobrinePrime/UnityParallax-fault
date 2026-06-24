@@ -11788,6 +11788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35532ebdf8764b99a98494f9abe34698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MenuButton: {fileID: 1667137985}
   targetFrameRate: 60
   backgroundRunningType: 0
 --- !u!1 &471493622
@@ -14129,7 +14130,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 596071631}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
   m_Name: 
@@ -36473,7 +36474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1667137986}
-  open: 1
+  open: 0
   menu: {fileID: 1781624393}
 --- !u!95 &1667137986
 Animator:
@@ -38616,7 +38617,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1781624391}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -38680,7 +38681,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1781624391}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
   m_Name: 

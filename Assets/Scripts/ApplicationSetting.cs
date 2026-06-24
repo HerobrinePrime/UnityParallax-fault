@@ -7,6 +7,8 @@ using Debug = UnityEngine.Debug;
 
 public class ApplicationSetting : MonoBehaviour
 {
+    public MenuButtonController MenuButton;
+    
     public int targetFrameRate = 60;
     public BackgroundRunningType backgroundRunningType = BackgroundRunningType.Running;
 
@@ -122,10 +124,13 @@ public class ApplicationSetting : MonoBehaviour
         TimeUIController.Instance.InitFromSettings();
         ApplicationSetting.Instance.InitializeFromSettings();
         UIController.Instance.InitFromSettings();
+        BGController.Instance.InitializeFromSettings();
         
         TimeCalculator.Instance.ReInitialize();
 
         Debug.LogError("Audio Settings not found!");
+        
+        MenuButton.ToggleMenu();
     }
 
 #if UNITY_EDITOR

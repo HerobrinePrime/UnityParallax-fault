@@ -24,18 +24,7 @@ public class TimeCalculator : MonoBehaviour
         }
     }
 
-    public static TimeCalculator Instance
-    {
-        get
-        {
-            if (_calculator == null)
-            {
-                _calculator = new TimeCalculator();
-            }
-
-            return _calculator;
-        }
-    }
+    public static TimeCalculator Instance => _calculator;
 
     public bool forceTime = false;
     private bool _lastForceTime;
@@ -60,6 +49,11 @@ public class TimeCalculator : MonoBehaviour
     private Season _lastSeason;
     private Season _currentSeason;
     private bool _isInitialized = false;
+
+    private void Awake()
+    {
+        _calculator = this;
+    }
 
     private void Start()
     {

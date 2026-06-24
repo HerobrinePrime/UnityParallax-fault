@@ -51,12 +51,14 @@ namespace UI
             if (open)
             {
                 // animator.SetFloat("time", 1);
-                DOTween.To(() => animator.GetFloat("time"), x => animator.SetFloat("time", x), 1, UIController.Instance.audioUIController.muteToggleDduration).SetEase(Ease.InOutSine);
+                DOTween.To(() => animator.GetFloat("time"), x => animator.SetFloat("time", x), 1,
+                    UIController.Instance.audioUIController.muteToggleDduration).SetEase(Ease.InOutSine);
             }
             else
             {
                 // animator.SetFloat("time", 0);
-                DOTween.To(() => animator.GetFloat("time"), x => animator.SetFloat("time", x), 0, UIController.Instance.audioUIController.muteToggleDduration).SetEase(Ease.InOutSine);
+                DOTween.To(() => animator.GetFloat("time"), x => animator.SetFloat("time", x), 0,
+                    UIController.Instance.audioUIController.muteToggleDduration).SetEase(Ease.InOutSine);
             }
         }
 
@@ -78,8 +80,9 @@ namespace UI
         //     _isAnimating = false;
         // }
 
-        void ToggleMenu()
+        public void ToggleMenu()
         {
+            Debug.Log("TOGGLE MENU");
             if (open)
             {
                 // menu.DOScale(1, 0.5f);
