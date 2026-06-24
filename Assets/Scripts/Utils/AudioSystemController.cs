@@ -135,28 +135,28 @@ public class AudioSystemController : MonoBehaviour
         if (playerPrefAudioList.Count != 0)
         {
             deletedAudioList = playerPrefAudioList;
-            // Debug.Log("Audio deleted:");
-            // foreach (var se in deletedAudioList)
-            // {
-            //     Debug.Log(se);
-            // }
+            Debug.Log("Audio deleted:");
+            foreach (var se in deletedAudioList)
+            {
+                Debug.Log(se);
+            }
         }
 
         if (newAudios.Count != 0)
         {
             newAddedAudioList = newAudios.Select(x => x.name).ToList();
-            // Debug.Log("Audio added:");
-            // foreach (var se in newAddedAudioList)
-            // {
-            //     Debug.Log(se);
-            // }
+            Debug.Log("Audio added:");
+            foreach (var se in newAddedAudioList)
+            {
+                Debug.Log(se);
+            }
         }
 
 
         bgmClips.AddRange(newAudios);
         PlayerSettingPref.Instance.AudioSettings.AudioList = bgmClips.Select(clip => clip.name).ToList();
 
-        // Debug.Log("Audio Count: " + bgmClips.Count);
-        // Debug.Log("Allowed Audio Count: " + allowedAudioCount);
+        Debug.Log("Audio Count: " + bgmClips.Count);
+        Debug.Log("Allowed Audio Count: " + allowedAudioCount);
     }
 }

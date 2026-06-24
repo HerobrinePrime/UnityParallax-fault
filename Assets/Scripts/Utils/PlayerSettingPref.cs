@@ -72,16 +72,27 @@ namespace Utils
                         // _instance = new PlayerSettingPref();
                         // _instance.InitializeNewSetting();
 
-                        string path = Path.Combine(Application.streamingAssetsPath, "defaultSettings.json");
-                        string json = File.ReadAllText(path);
-                        _instance = JsonUtility.FromJson<PlayerSettingPref>(json);
-                        PlayerPrefs.SetString(Key, json);
-                        PlayerPrefs.Save();
+                        LoadSettings();
                     }
                 }
 
                 return _instance;
             }
+        }
+
+        public void ResetSettings()
+        {
+            Debug.Log("Resetting settings from defaultSettings.json");
+            LoadSettings();
+        }
+
+        private static void LoadSettings()
+        {
+            string path = Path.Combine(Application.streamingAssetsPath, "defaultSettings.json");
+            string json = File.ReadAllText(path);
+            _instance = JsonUtility.FromJson<PlayerSettingPref>(json);
+            PlayerPrefs.SetString(Key, json);
+            PlayerPrefs.Save();
         }
 
         public void Save()
