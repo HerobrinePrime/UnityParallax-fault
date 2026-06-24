@@ -1,27 +1,35 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
-using Enum;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
+using UnityEngine.EventSystems;
 
-public class SettingButtonController : PrototypeButtonController
+public class PrototypeButtonController : MonoBehaviour
     , IPointerEnterHandler
     , IPointerExitHandler
 {
-    // private static List<SettingButtonController> _allButtons = new List<SettingButtonController>();
+    protected TweenerCore<Color, Color, ColorOptions> bgTween;
+    protected TweenerCore<Color, Color, ColorOptions> borderTween;
+    protected TweenerCore<Color, Color, ColorOptions> textTween;
+    protected TweenerCore<Color, Color, ColorOptions> iconTween;
 
-    public bool Selected = false;
-    public SettingType settingType;
-    private bool _isSelected = false;
 
+    protected Image _bgImage;
+    protected Image _borderImage;
+    protected TMP_Text _text;
+    protected Image _iconImage;
 
+    protected Color _defaultBgColor;
+    protected Color _defaultBorderColor;
+    protected Color _defaultTextColor;
+    protected Color _defaultIconColor;
+    public Color SelectedBgColor;
+    public Color SelectedBorderColor;
+    public Color SelectedTextColor;
+    public Color SelectedIconColor;
 
     private void Start()
     {
@@ -34,24 +42,10 @@ public class SettingButtonController : PrototypeButtonController
         _defaultBorderColor = _borderImage.color;
         _defaultTextColor = _text.color;
         _defaultIconColor = _iconImage.color;
-
-        // Debug.Log($"Default colors: {_defaultBgColor}, {_defaultBorderColor}, {_defaultTextColor}, {_defaultIconColor}");
-        SettingButtonsController._allButtons.Add(this);
-
-        if (Selected)
-        {
-            OnPointerEnter(null);
-            _isSelected = true;
-        }
     }
 
-    public new void OnPointerEnter(PointerEventData eventData)
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        // Debug.Log("OnPointerEnter");
-        // _bgImage.color = SelectedBgColor;
-        // _borderImage.color = SelectedBorderColor;
-        // _text.color = SelectedTextColor;
-        // _iconImage.color = SelectedIconColor;]
         ClearTweens();
         bgTween = DOTween.To(() => _bgImage.color, x => _bgImage.color = x,
             SelectedBgColor, SettingButtonsController.Instance.colorChangingDuration);
@@ -63,39 +57,8 @@ public class SettingButtonController : PrototypeButtonController
             SelectedIconColor, SettingButtonsController.Instance.colorChangingDuration);
     }
 
-    public new void OnPointerExit(PointerEventData eventData)
+    public void OnPointerExit(PointerEventData eventData)
     {
-        // Debug.Log("OnPointerExit");
-        if (!_isSelected)
-        {
-            Deselect();
-        }
-    }
-
-    public void OnClick()
-    {
-        _isSelected = true;
-
-        SettingButtonsController.Instance.TransitionToSetting(this.settingType);
-
-        foreach (var button in SettingButtonsController._allButtons)
-        {
-            if (button != this)
-            {
-                button.Deselect();
-            }
-        }
-    }
-
-    private void Deselect()
-    {
-        // Debug.Log("OnDeselect");
-        _isSelected = false;
-        // _bgImage.color = _defaultBgColor;
-        // _borderImage.color = _defaultBorderColor;
-        // _text.color = _defaultTextColor;
-        // _iconImage.color = _defaultIconColor;
-
         ClearTweens();
 
         bgTween = DOTween.To(() => _bgImage.color, x => _bgImage.color = x,
@@ -108,5 +71,11 @@ public class SettingButtonController : PrototypeButtonController
             _defaultIconColor, SettingButtonsController.Instance.colorChangingDuration);
     }
 
-  
+    protected void ClearTweens()
+    {
+        bgTween?.Kill();
+        borderTween?.Kill();
+        textTween?.Kill();
+        iconTween?.Kill();
+    }
 }

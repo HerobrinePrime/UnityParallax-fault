@@ -240,7 +240,7 @@ namespace UI
 
         #endregion
 
-        private void InitFromSettings()
+        public void InitFromSettings()
         {
             //init other settings
             var audioSettings = PlayerSettingPref.Instance.AudioSettings;

@@ -6,7 +6,7 @@ using Utils;
 
 public class TimeCalculator : MonoBehaviour
 {
-    private TimeCalculator _calculator;
+    private static TimeCalculator _calculator;
     private DateTime now = default;
     public BGController bgController;
     public TimeUIController timeUIController;
@@ -24,7 +24,7 @@ public class TimeCalculator : MonoBehaviour
         }
     }
 
-    public TimeCalculator Instance
+    public static TimeCalculator Instance
     {
         get
         {
@@ -563,5 +563,10 @@ public class TimeCalculator : MonoBehaviour
     {
         Debug.Log("Setting changed, reinitializing time");
         InitTime(DateTime.Now);
+    }
+    
+    public void ReInitialize()
+    {
+        this._isInitialized = false;
     }
 }

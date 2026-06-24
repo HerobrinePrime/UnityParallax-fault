@@ -69,7 +69,7 @@ public class TimeUIController : MonoBehaviour
         }
     }
 
-    private void InitFromSettings()
+    public void InitFromSettings()
     {
         var timeSettings = PlayerSettingPref.Instance.TimeSettings;
 

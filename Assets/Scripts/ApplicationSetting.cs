@@ -1,4 +1,5 @@
 ﻿using System;
+using UI;
 using UnityEngine;
 using Utils;
 using Debug = UnityEngine.Debug;
@@ -112,6 +113,19 @@ public class ApplicationSetting : MonoBehaviour
             targetFrameRate,
             backgroundRunningType
         );
+    }
+
+    public void ResetSettings()
+    {
+        PlayerSettingPref.Instance.ResetSettings();
+        
+        TimeUIController.Instance.InitFromSettings();
+        ApplicationSetting.Instance.InitializeFromSettings();
+        UIController.Instance.InitFromSettings();
+        
+        TimeCalculator.Instance.ReInitialize();
+
+        Debug.LogError("Audio Settings not found!");
     }
 
 #if UNITY_EDITOR
