@@ -183,14 +183,16 @@ namespace UI
         {
             audioUIController.audioSource.volume = value;
 
-            PlayerSettingPref.Instance.OtherSettings.Volume = value;
+            // PlayerSettingPref.Instance.OtherSettings.Volume = value;
+            PlayerSettingPref.Instance.AudioSettings.Volume = value;
         }
 
         public void ToggleMute(bool mute)
         {
             audioUIController.audioSource.mute = mute;
 
-            PlayerSettingPref.Instance.OtherSettings.Muted = mute;
+            // PlayerSettingPref.Instance.OtherSettings.Muted = mute;
+            PlayerSettingPref.Instance.AudioSettings.Muted = mute;
         }
 
         public void SetTransparency(float transparency)
@@ -241,9 +243,11 @@ namespace UI
         private void InitFromSettings()
         {
             //init other settings
+            var audioSettings = PlayerSettingPref.Instance.AudioSettings;
+            audioUIController.audioSource.volume = audioSettings.Volume;
+            audioUIController.audioSource.mute = audioSettings.Muted;
+            
             var otherSettings = PlayerSettingPref.Instance.OtherSettings;
-            audioUIController.audioSource.volume = otherSettings.Volume;
-            audioUIController.audioSource.mute = otherSettings.Muted;
             menuTransparencyUIController.MenuCurrentTransparency = otherSettings.MenuTransparency;
 
             var bgControllerSettings = PlayerSettingPref.Instance.BGControllerSettings;
@@ -269,8 +273,8 @@ namespace UI
             bgUIController.dampingSlider.SetValueWithoutNotify(bgControllerSettings.Damping);
             bgUIController.dampingText.SetText(bgControllerSettings.Damping.ToString());
 
-            audioUIController.volumeSlider.SetValueWithoutNotify(otherSettings.Volume);
-            audioUIController.muteToggle.SetIsOnWithoutNotify(otherSettings.Muted);
+            audioUIController.volumeSlider.SetValueWithoutNotify(audioSettings.Volume);
+            audioUIController.muteToggle.SetIsOnWithoutNotify(audioSettings.Muted);
 
             menuTransparencyUIController.transparencySlider.SetValueWithoutNotify(otherSettings.MenuTransparency);
 

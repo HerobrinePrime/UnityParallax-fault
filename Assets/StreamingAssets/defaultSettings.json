@@ -1,7 +1,5 @@
 {
     "otherSettings": {
-        "volume": 0.14293016493320466,
-        "muted": false,
         "menuTransparency": 1.0
     },
     "bgControllerSettings": {
@@ -33,5 +31,10 @@
         "nightStartHour": 20,
         "nightStartMinute": 0,
         "transitionDuration": 30.0
+    },
+    "audioSettings": {
+        "audioList": [],
+        "volume": 0.14293016493320466,
+        "muted": false
     }
 }

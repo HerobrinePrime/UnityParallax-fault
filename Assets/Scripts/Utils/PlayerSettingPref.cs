@@ -46,6 +46,14 @@ namespace Utils
             set => timeSettings = value;
         }
 
+        [SerializeField] private AudioSettings audioSettings;
+
+        public AudioSettings AudioSettings
+        {
+            get => audioSettings;
+            set => audioSettings = value;
+        }
+
         private static PlayerSettingPref _instance;
 
         public static PlayerSettingPref Instance
@@ -100,29 +108,13 @@ namespace Utils
     [Serializable]
     public class OtherSettings
     {
-        [SerializeField] private float volume;
-        [SerializeField] private bool muted;
         [SerializeField] private float menuTransparency;
 
         #region MyRegion
 
         public OtherSettings(float volume, bool muted, float menuTransparency)
         {
-            this.volume = volume;
-            this.muted = muted;
             this.menuTransparency = menuTransparency;
-        }
-
-        public float Volume
-        {
-            get => volume;
-            set => volume = value;
-        }
-
-        public bool Muted
-        {
-            get => muted;
-            set => muted = value;
         }
 
         public float MenuTransparency
@@ -377,8 +369,26 @@ namespace Utils
     [Serializable]
     public class AudioSettings
     {
-        [SerializeField] public List<string> audioList;
-        
-        
+        [SerializeField] private List<string> audioList;
+        [SerializeField] private float volume;
+        [SerializeField] private bool muted;
+
+        public List<string> AudioList
+        {
+            get => audioList;
+            set => audioList = value;
+        }
+
+        public float Volume
+        {
+            get => volume;
+            set => volume = value;
+        }
+
+        public bool Muted
+        {
+            get => muted;
+            set => muted = value;
+        }
     }
 }
