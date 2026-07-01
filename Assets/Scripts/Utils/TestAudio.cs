@@ -51,7 +51,7 @@ namespace Utils
             {
                 while (_isRunning)
                 {
-                    if (!(ApplicationSetting.IsMuted || UIController.muted))
+                    if (!(ApplicationSetting.IsMuted || AudioUIController.muted))
                     {
                         GraduallyMuteAudio(TestAudioPlaying());
                     }
@@ -137,7 +137,7 @@ namespace Utils
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 // audioSource.volume = mute ? 0 : 1;
-                audioSource.DOFade(mute ? 0 : UIController.volume, 0.5f);
+                audioSource.DOFade(mute ? 0 : AudioUIController.volume, 0.5f);
             });
         }
 

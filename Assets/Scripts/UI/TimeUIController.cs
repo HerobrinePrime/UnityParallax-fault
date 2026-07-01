@@ -115,6 +115,7 @@ public class TimeUIController : MonoBehaviour
         autoCalculateSunPositionToggle.GetComponent<StartTimeToggle>().ToggleStartTime(autoCalculateSunPosition);
     }
 
+    [Obsolete]
     public TimeSettings GetMetaSettings()
     {
         return new TimeSettings(

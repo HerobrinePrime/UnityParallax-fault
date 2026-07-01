@@ -123,7 +123,7 @@ namespace Utils
 
         #region MyRegion
 
-        public OtherSettings(float volume, bool muted, float menuTransparency)
+        public OtherSettings( float menuTransparency)
         {
             this.menuTransparency = menuTransparency;
         }

@@ -16,12 +16,13 @@ namespace UI
         public CanvasGroup menu;
 
         public ApplicationUIController applicationUIController;
+
         public BGUIController bgUIController;
-        public AudioUIController audioUIController;
+
+        // public AudioUIController audioUIController;
         public MenuTransparencyUIController menuTransparencyUIController;
 
-        public static float volume;
-        public static bool muted;
+      
 
         public static UIController Instance;
 
@@ -46,17 +47,11 @@ namespace UI
             InitFromSettings();
         }
 
-        private void Update()
-        {
-            //update volume and mute state for audioTester
-            volume = audioUIController.volumeSlider.value;
-            muted = audioUIController.muteToggle.isOn;
-        }
 
         public TweenerCore<float, float, FloatOptions> ToggleMenu(bool show)
         {
             return menu.DOFade(show ? menuTransparencyUIController.MenuCurrentTransparency : 0,
-                audioUIController.muteToggleDduration);
+                menuTransparencyUIController.MenuCurrentTransparency);
         }
 
         private void CreateBackgroundRunningTypeDropdownOptions(TMP_Dropdown dropdown)
@@ -179,22 +174,6 @@ namespace UI
             PlayerSettingPref.Instance.BGControllerSettings.Damping = value;
         }
 
-        public void VolumeSliderValueChanged(float value)
-        {
-            audioUIController.audioSource.volume = value;
-
-            // PlayerSettingPref.Instance.OtherSettings.Volume = value;
-            PlayerSettingPref.Instance.AudioSettings.Volume = value;
-        }
-
-        public void ToggleMute(bool mute)
-        {
-            audioUIController.audioSource.mute = mute;
-
-            // PlayerSettingPref.Instance.OtherSettings.Muted = mute;
-            PlayerSettingPref.Instance.AudioSettings.Muted = mute;
-        }
-
         public void SetTransparency(float transparency)
         {
             menu.alpha = menuTransparencyUIController.MenuCurrentTransparency = transparency;
@@ -243,10 +222,7 @@ namespace UI
         public void InitFromSettings()
         {
             //init other settings
-            var audioSettings = PlayerSettingPref.Instance.AudioSettings;
-            audioUIController.audioSource.volume = audioSettings.Volume;
-            audioUIController.audioSource.mute = audioSettings.Muted;
-            
+
             var otherSettings = PlayerSettingPref.Instance.OtherSettings;
             menuTransparencyUIController.MenuCurrentTransparency = otherSettings.MenuTransparency;
 
@@ -273,8 +249,7 @@ namespace UI
             bgUIController.dampingSlider.SetValueWithoutNotify(bgControllerSettings.Damping);
             bgUIController.dampingText.SetText(bgControllerSettings.Damping.ToString());
 
-            audioUIController.volumeSlider.SetValueWithoutNotify(audioSettings.Volume);
-            audioUIController.muteToggle.SetIsOnWithoutNotify(audioSettings.Muted);
+            
 
             menuTransparencyUIController.transparencySlider.SetValueWithoutNotify(otherSettings.MenuTransparency);
 
@@ -284,12 +259,12 @@ namespace UI
                 .YConstraint);
         }
 
-
+        [Obsolete]
         public OtherSettings GetMetaSettings()
         {
             return new OtherSettings(
-                audioUIController.audioSource.volume,
-                audioUIController.audioSource.mute,
+                // audioUIController.audioSource.volume,
+                // audioUIController.audioSource.mute,
                 menuTransparencyUIController.MenuCurrentTransparency
             );
         }
@@ -312,25 +287,21 @@ namespace UI
     }
 
     [Serializable]
-    public class AudioUIController
-    {
-        public AudioSource audioSource;
-        public Slider volumeSlider;
-
-        public Toggle muteToggle;
-        public float muteToggleDduration = 0.5f;
-    }
-
-    [Serializable]
     public class MenuTransparencyUIController
     {
         public Slider transparencySlider;
         private float _menuCurrentTransparency = 1f;
+        private float _menuToggleDduration = 0.5f;
 
         public float MenuCurrentTransparency
         {
             get => _menuCurrentTransparency;
             set => _menuCurrentTransparency = value;
+        }
+
+        public float MenuToggleDduration
+        {
+            get => _menuToggleDduration;
         }
     }
 
@@ -352,6 +323,4 @@ namespace UI
         public TMP_Text targetFrameRateText;
         public TMP_Dropdown backgroundRunningTypeDropdown;
     }
-
-    
 }

@@ -545,7 +545,7 @@ public class BGController : MonoBehaviour
         this.SetVerticalConstraint(bgControllerSettings.YConstraint);
     }
 
-
+    [Obsolete]
     public BGControllerSettings GetMetaSettings()
     {
         // Debug.Log("GetMetaSettings: " +useParallax);

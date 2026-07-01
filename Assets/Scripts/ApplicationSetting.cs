@@ -8,7 +8,7 @@ using Debug = UnityEngine.Debug;
 public class ApplicationSetting : MonoBehaviour
 {
     public MenuButtonController MenuButton;
-    
+
     public int targetFrameRate = 60;
     public BackgroundRunningType backgroundRunningType = BackgroundRunningType.Running;
 
@@ -71,6 +71,8 @@ public class ApplicationSetting : MonoBehaviour
 
     public void SetTargetFrameRate(int frameRate)
     {
+        // Debug.Log("SetTargetFrameRate: " + frameRate);
+        // Debug.Log("vSync: " + QualitySettings.vSyncCount);
         Application.targetFrameRate = targetFrameRate = frameRate;
     }
 
@@ -107,8 +109,11 @@ public class ApplicationSetting : MonoBehaviour
         // this.targetFrameRate = applicationSettings.TargetFrameRate;
         this.SetBackgroundRunningType(applicationSettings.BackgroundRunningType);
         this.SetTargetFrameRate(applicationSettings.TargetFrameRate);
+
+        QualitySettings.vSyncCount = 0;
     }
 
+    [Obsolete]
     public ApplicationSettings GetMetaSettings()
     {
         return new ApplicationSettings(
@@ -120,16 +125,16 @@ public class ApplicationSetting : MonoBehaviour
     public void ResetSettings()
     {
         PlayerSettingPref.Instance.ResetSettings();
-        
+
         TimeUIController.Instance.InitFromSettings();
         ApplicationSetting.Instance.InitializeFromSettings();
         UIController.Instance.InitFromSettings();
         BGController.Instance.InitializeFromSettings();
-        
+
         TimeCalculator.Instance.ReInitialize();
 
         Debug.LogError("Audio Settings not found!");
-        
+
         MenuButton.ToggleMenu();
     }
 
