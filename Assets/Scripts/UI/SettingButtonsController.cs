@@ -5,6 +5,7 @@ using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
 using Enum;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class SettingButtonsController : MonoBehaviour
@@ -15,8 +16,21 @@ public class SettingButtonsController : MonoBehaviour
     public float settingMenuChangingDuration = 0.3f;
 
     public float containerWidth = 416f;
-
-    public RectTransform settingMenuContainer;
+    public float audioMenuContainerHeight = 440;
+    public float audioMenuContentHeight = 389;
+    
+    public RectTransform Container;
+    public RectTransform bg;
+    public RectTransform background;
+    public RectTransform border;
+    // public RectTransform seperator;
+    // public RectTransform SettingButtons;
+    [FormerlySerializedAs("settingMenuContainer")]
+    public RectTransform Contents;
+    public RectTransform ScrollViewAudio;
+    
+    
+    
 
     private TweenerCore<Vector2, Vector2, VectorOptions> settingMenuChangingTween;
     // public HorizontalLayoutGroup settingMenuContainer;
@@ -25,6 +39,11 @@ public class SettingButtonsController : MonoBehaviour
     {
         Instance = this;
     }
+
+    // private void Start()
+    // {
+    //     Debug.Log(container.rect.width);
+    // }
 
     public void TransitionToSetting(SettingType settingType)
     {
@@ -35,7 +54,8 @@ public class SettingButtonsController : MonoBehaviour
 
         // settingMenuContainer.position = new Vector3(-containerWidth * (int)settingType, settingMenuContainer.position.y, settingMenuContainer.position.z);
         // settingMenuContainer.padding.left = -(int)(containerWidth * (int)settingType);
-        settingMenuContainer.anchoredPosition = new Vector2(-containerWidth * (int)settingType, settingMenuContainer.anchoredPosition.y);
+        Contents.anchoredPosition = new Vector2(-containerWidth * (int)settingType,
+            Contents.anchoredPosition.y);
         // settingMenuChangingTween = DOTween.To(() => settingMenuContainer.anchoredPosition,
         //     x => settingMenuContainer.anchoredPosition = x,
         //     new Vector2(-containerWidth * (int)settingType, settingMenuContainer.anchoredPosition.y),
