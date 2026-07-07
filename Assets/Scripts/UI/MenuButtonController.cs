@@ -1,5 +1,7 @@
 using System.Collections;
 using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using UnityEngine;
 using Utils;
 
@@ -14,6 +16,9 @@ namespace UI
         public CanvasGroup menu;
 
         private CanvasGroup _canvasGroup;
+
+        private TweenerCore<float, float, FloatOptions> menuToggleButtonTween;
+        private TweenerCore<float, float, FloatOptions> menuToggleTween;
 
         private void Start()
         {
@@ -51,13 +56,15 @@ namespace UI
             if (open)
             {
                 // animator.SetFloat("time", 1);
-                DOTween.To(() => animator.GetFloat("time"), x => animator.SetFloat("time", x), 1,
+                menuToggleButtonTween?.Kill();
+                menuToggleButtonTween = DOTween.To(() => animator.GetFloat("time"), x => animator.SetFloat("time", x), 1,
                     UIController.Instance.menuTransparencyUIController.MenuToggleDduration).SetEase(Ease.InOutSine);
             }
             else
             {
                 // animator.SetFloat("time", 0);
-                DOTween.To(() => animator.GetFloat("time"), x => animator.SetFloat("time", x), 0,
+                menuToggleButtonTween?.Kill();
+                menuToggleButtonTween = DOTween.To(() => animator.GetFloat("time"), x => animator.SetFloat("time", x), 0,
                     UIController.Instance.menuTransparencyUIController.MenuToggleDduration).SetEase(Ease.InOutSine);
             }
         }
@@ -88,13 +95,15 @@ namespace UI
                 // menu.DOScale(1, 0.5f);
                 menu.gameObject.SetActive(true);
                 // menu.DOFade(1, duration);
-                UIController.Instance.ToggleMenu(true);
+                menuToggleTween?.Kill();
+                menuToggleTween = UIController.Instance.ToggleMenu(true);
             }
             else
             {
                 // menu.DOScale(0, 0.5f);
                 PlayerSettingPref.Instance.Save();
-                UIController.Instance.ToggleMenu(false).OnComplete(() => { menu.gameObject.SetActive(false); });
+                menuToggleTween?.Kill();
+                menuToggleTween = UIController.Instance.ToggleMenu(false).OnComplete(() => { menu.gameObject.SetActive(false); });
             }
         }
 

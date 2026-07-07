@@ -51,7 +51,7 @@ namespace UI
         public TweenerCore<float, float, FloatOptions> ToggleMenu(bool show)
         {
             return menu.DOFade(show ? menuTransparencyUIController.MenuCurrentTransparency : 0,
-                menuTransparencyUIController.MenuCurrentTransparency);
+                UIController.Instance.menuTransparencyUIController.MenuToggleDduration);
         }
 
         private void CreateBackgroundRunningTypeDropdownOptions(TMP_Dropdown dropdown)
@@ -291,7 +291,7 @@ namespace UI
     {
         public Slider transparencySlider;
         private float _menuCurrentTransparency = 1f;
-        private float _menuToggleDduration = 0.5f;
+        private float _menuToggleDduration = 0.3f;
 
         public float MenuCurrentTransparency
         {
