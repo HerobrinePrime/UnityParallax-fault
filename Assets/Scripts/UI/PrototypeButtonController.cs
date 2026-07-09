@@ -31,7 +31,7 @@ public class PrototypeButtonController : MonoBehaviour
     public Color SelectedTextColor;
     public Color SelectedIconColor;
 
-    private void Start()
+    protected void Start()
     {
         _bgImage = transform.Find("bg").GetComponent<Image>();
         _borderImage = transform.Find("border").GetComponent<Image>();

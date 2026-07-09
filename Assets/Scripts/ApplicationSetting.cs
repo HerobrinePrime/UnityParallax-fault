@@ -44,30 +44,30 @@ public class ApplicationSetting : MonoBehaviour
         PlayerSettingPref.Instance.Save();
     }
 
-    private void PauseOrResume(bool goToPause)
-    {
-        switch (backgroundRunningType)
+        private void PauseOrResume(bool goToPause)
         {
-            case BackgroundRunningType.Running:
-                Time.timeScale = 1;
-                Application.targetFrameRate = targetFrameRate;
-                break;
-            case BackgroundRunningType.Muted:
-                IsMuted = goToPause;
-                TestAudio.Instance.GraduallyMuteAudio(goToPause);
-                Time.timeScale = 1;
-                Application.targetFrameRate = targetFrameRate;
-                break;
-            case BackgroundRunningType.Paused:
-                Time.timeScale = goToPause ? 0 : 1;
-                Application.targetFrameRate = goToPause ? 1 : targetFrameRate;
-                break;
-            case BackgroundRunningType.Stopped:
-                Time.timeScale = goToPause ? 0 : 1;
-                Application.targetFrameRate = goToPause ? 1 : targetFrameRate;
-                break;
+            switch (backgroundRunningType)
+            {
+                case BackgroundRunningType.Running:
+                    Time.timeScale = 1;
+                    Application.targetFrameRate = targetFrameRate;
+                    break;
+                case BackgroundRunningType.Muted:
+                    IsMuted = goToPause;
+                    TestAudio.Instance.GraduallyMuteAudio(goToPause);
+                    Time.timeScale = 1;
+                    Application.targetFrameRate = targetFrameRate;
+                    break;
+                case BackgroundRunningType.Paused:
+                    Time.timeScale = goToPause ? 0 : 1;
+                    Application.targetFrameRate = goToPause ? 1 : targetFrameRate;
+                    break;
+                case BackgroundRunningType.Stopped:
+                    Time.timeScale = goToPause ? 0 : 1;
+                    Application.targetFrameRate = goToPause ? 1 : targetFrameRate;
+                    break;
+            }
         }
-    }
 
     public void SetTargetFrameRate(int frameRate)
     {
@@ -133,7 +133,7 @@ public class ApplicationSetting : MonoBehaviour
 
         TimeCalculator.Instance.ReInitialize();
 
-        Debug.LogError("Audio Settings not found!");
+        // Debug.LogError("Audio Settings not found!");
 
         MenuButton.ToggleMenu();
     }
